@@ -1,3 +1,5 @@
+'use client';
+
 import { Placeholder } from "react-placeholder";
 
 export default function TrackAppShowcase() {
