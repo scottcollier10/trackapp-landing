@@ -126,64 +126,6 @@ const coreCapabilities = [
 // HELPER COMPONENTS
 // ============================================================================
 
-function InsightDemo() {
-  const [active, setActive] = useState<InsightId>("consistency");
-  const current = insightModes.find((m) => m.id === active)!;
-
-  return (
-    <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/70 p-5 md:p-6 shadow-lg shadow-blue-900/20">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-400">
-          Optional AI Assist
-        </h3>
-        <span className="inline-flex items-center gap-1 rounded-full border border-blue-600/40 bg-blue-600/10 px-3 py-1 text-xs font-medium text-blue-300">
-          <span className="h-2 w-2 rounded-full bg-blue-400" />
-          Assistive layer
-        </span>
-      </div>
-      <div className="mb-4 flex flex-wrap gap-2">
-        {insightModes.map((mode) => (
-          <button
-            key={mode.id}
-            onClick={() => setActive(mode.id)}
-            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium transition ${
-              mode.id === active
-                ? "border-blue-400 bg-blue-600/20 text-blue-100 shadow-[0_0_0_1px_rgba(168,85,247,0.4)]"
-                : "border-slate-700 bg-slate-900/60 text-slate-300 hover:border-blue-600/60 hover:text-blue-100"
-            }`}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-orange-400 to-blue-400" />
-            {mode.label}
-          </button>
-        ))}
-      </div>
-      <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 md:p-5">
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              Coaching Focus
-            </p>
-            <p className="text-sm font-medium text-slate-100">{current.label}</p>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-slate-500">Session Metric</p>
-            <p className="text-sm font-mono font-semibold text-emerald-300">
-              {current.badge}
-            </p>
-            <p className="text-[11px] text-slate-500">{current.meta}</p>
-          </div>
-        </div>
-        <p className="text-sm leading-relaxed text-slate-200">
-          {current.description}
-        </p>
-      </div>
-      <p className="mt-3 text-[11px] text-slate-500">
-        AI summaries help speed up note-writing—coaches can edit, ignore, or rewrite entirely.
-        Metrics are calculated deterministically; AI is the assistive layer, not the decision-maker.
-      </p>
-    </div>
-  );
-}
 
 function Section({
   id,
