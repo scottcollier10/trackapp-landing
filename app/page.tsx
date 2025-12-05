@@ -1,29 +1,51 @@
 'use client';
 
 import { useState } from "react";
+import Image from "next/image";
+import heroBurst from "@/public/images/hero-burst.webp";
+import heroCoach from "@/public/images/trackapp-hero-coach-tablet.webp";
+import heroCoachCu from "@/public/images/trackapp-hero-coach-tablet-cu.webp";
+import featureMobile from "@/public/images/feature-mobile-dashboard.webp";
+import featurePerf from "@/public/images/feature-50x-performance.webp";
+import featureFilters from "@/public/images/feature-advanced-filters.webp";
+import mobileDashboard from "@/public/images/mobile-dashboard-card.webp";
+import coreMulti from "@/public/images/core-multidevice.webp";
+import coreSession from "@/public/images/core-session-analysis.webp";
+import coreCompare from "@/public/images/core-driver-compare.webp";
+import coreProgress from "@/public/images/core-longitudinal-progress.webp";
+import coreFilter from "@/public/images/core-advanced-filtering.webp";
+import coreCsv from "@/public/images/core-csv-export.webp";
+
+
+// ============================================================================
+// DATA ARRAYS
+// ============================================================================
 
 const stats = [
-  { label: "12+ Features", value: "Shipped to production" },
-  { label: "54 Tests", value: "Unit test coverage" },
-  { label: "<2s Response", value: "AI insight generation" },
-  { label: "0 Dependencies", value: "Pure Swift iOS (no 3rd party libs)" },
+  { label: "50x Faster", value: "Sub-100ms page loads" },
+  { label: "14,000+ LOC", value: "Production-ready code" },
+  { label: "Mobile-First", value: "Phone, tablet, desktop" },
+  { label: "Pilot-Ready", value: "Deployed & stable" },
 ];
 
 const featureCards = [
   {
-    icon: "🎯",
-    title: "Automated Session Analysis",
-    body: "Every track session automatically scored for consistency, pace trends, and fatigue patterns—no spreadsheets required.",
+    icon: "📱",
+    title: "Mobile-First Dashboard",
+    body: "Designed for phone first—not a desktop UI crushed onto a small screen. Card layouts on mobile, tables on desktop, so coaches can review 12 drivers in under 2 minutes between sessions.",
+    image: featureMobile,
   },
   {
-    icon: "🤖",
-    title: "AI Coaching Insights",
-    body: "Claude Sonnet 4.5 turns your data into prioritized recommendations—like having a junior coach review every session.",
+    icon: "⚡",
+    title: "50x Performance Optimization",
+    body: "Rebuilt the data layer to remove N+1 queries—50+ calls collapsed into a single optimized query. Sub-100ms page loads in production with headroom for 1,000+ sessions.",
+    image: featurePerf,
   },
   {
-    icon: "📈",
-    title: "Progress Tracking",
-    body: "See long-term improvement with track-specific records, filters, and driver stats in a clean, modern dashboard.",
+    icon: "🔍",
+    title: "Advanced Filtering & Export",
+    body: "Global search and multi-select filters for track, driver, date, and class. Sortable columns, sticky filters, and CSV export for full-weekend and program-level analysis.",
+    image: featureFilters,
   },
 ];
 
@@ -31,10 +53,10 @@ const techStack = [
   "Next.js 14",
   "Supabase",
   "PostgreSQL",
-  "Anthropic Claude 4.5 Sonnet",
-  "Vercel",
+  "Swift/SwiftUI",
+  "Vercel Edge",
   "TypeScript",
-  "Vitest",
+  "XCTest + Vitest",
   "Tailwind CSS",
 ];
 
@@ -43,28 +65,69 @@ const metrics = [
     title: "Development Timeline",
     items: [
       "Started: May 2024",
-      "MVP Shipped: Nov 2024",
-      "6 months, part-time",
+      "v2.4 Shipped: Dec 2024",
+      "Production-deployed & stable",
     ],
   },
   {
-    title: "What I Built",
+    title: "What's Built",
     items: [
-      "70+ files created",
-      "7,000+ lines of code",
-      "12+ production features",
-      "54 unit tests (and growing)",
+      "160+ files (95 TS, 52 Swift)",
+      "14,000+ lines of code",
+      "54 unit tests (iOS + web)",
+      "Live at trackapp-portal.vercel.app",
     ],
   },
   {
-    title: "Budget & Scale",
+    title: "v2.4 Highlights",
     items: [
-      "$234 initial budget",
-      "Production-ready, not a prototype",
-      "Built to support coaches + drivers",
+      "Mobile-first responsive design",
+      "50x performance optimization",
+      "Advanced filtering & export",
+      "Production-grade engineering",
     ],
   },
 ];
+
+const coreCapabilities = [
+  {
+    title: "Multi-Driver Overview",
+    description:
+      "Monitor 12–15 drivers at once on phone or tablet. Card-based layouts keep key metrics readable and thumb-reachable in the paddock.",
+    image: coreMulti,
+  },
+  {
+    title: "Session Analysis",
+    description:
+      "Lap-by-lap progression with consistency scores, pace trends, and session patterns. Spot where a driver settles in or starts to fade at a glance.",
+    image: coreSession,
+  },
+  {
+    title: "Driver Comparison",
+    description:
+      "Head-to-head lap analysis with time deltas, sector gains, and best-lap overlays. See exactly where one driver is faster and why.",
+    image: coreCompare,
+  },
+  {
+    title: "Longitudinal Progress",
+    description:
+      "Track a single driver across multiple events. Compare weekends, highlight gains, and back up coaching feedback with real data.",
+    image: coreProgress,
+  },
+  {
+    title: "Advanced Filtering",
+    description:
+      "Global search plus multi-select filters for track, driver, date, and car. Sortable columns and sticky filters so views stay put between sessions.",
+    image: coreFilter,
+  },
+  {
+    title: "CSV Export",
+    description:
+      "One-click export of session data—driver, track, laps, best lap, and consistency. Excel and Google Sheets ready for program-level analysis.",
+    image: coreCsv,
+  },
+];
+
 
 const insightModes = [
   {
@@ -72,42 +135,47 @@ const insightModes = [
     label: "Consistency",
     badge: "89 / 100",
     description:
-      "Lap times within 0.8s of best lap. Strong base to build from—work on tightening mid-session variance.",
-    meta: "Stable across 12 laps",
+      "Driver maintaining lap times within 0.8s of best lap across 12 laps. Strong foundation—coaching focus: tighten mid-session variance and work on late-session concentration.",
+    meta: "Stable across session",
   },
   {
     id: "pace",
     label: "Pace Trend",
     badge: "Improving",
     description:
-      "Last 3 laps average 0.4s faster than first 3. You’re building confidence—next step is braking consistency into Turn 11.",
-    meta: "-0.4s vs early session",
+      "Last 3 laps averaging 0.4s faster than opening laps. Driver building confidence through session—next coaching priority: braking consistency into technical sections.",
+    meta: "Progressive improvement",
   },
   {
     id: "fatigue",
-    label: "Late-Session",
-    badge: "Slight Fade",
+    label: "Session Pattern",
+    badge: "Late Fade",
     description:
-      "Small drop-off in the final two laps. Likely mental fatigue rather than mechanical—reset focus before push laps.",
-    meta: "+0.2s final two laps",
+      "Performance drop in final laps suggests mental fatigue rather than mechanical issues. Coaching recommendation: reset focus protocol before push laps, hydration check.",
+    meta: "Concentration management",
   },
 ] as const;
 
 type InsightId = (typeof insightModes)[number]["id"];
+
+
+// ============================================================================
+// HELPER COMPONENTS
+// ============================================================================
 
 function InsightDemo() {
   const [active, setActive] = useState<InsightId>("consistency");
   const current = insightModes.find((m) => m.id === active)!;
 
   return (
-    <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/70 p-5 md:p-6 shadow-lg shadow-purple-900/20">
+    <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/70 p-5 md:p-6 shadow-lg shadow-blue-900/20">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-400">
-          AI Coaching Preview
+          Optional AI Assist
         </h3>
-        <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
-          <span className="h-2 w-2 rounded-full bg-emerald-400" />
-          Live from session data
+        <span className="inline-flex items-center gap-1 rounded-full border border-blue-600/40 bg-blue-600/10 px-3 py-1 text-xs font-medium text-blue-300">
+          <span className="h-2 w-2 rounded-full bg-blue-400" />
+          Assistive layer
         </span>
       </div>
       <div className="mb-4 flex flex-wrap gap-2">
@@ -117,11 +185,11 @@ function InsightDemo() {
             onClick={() => setActive(mode.id)}
             className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium transition ${
               mode.id === active
-                ? "border-purple-400 bg-purple-500/20 text-purple-100 shadow-[0_0_0_1px_rgba(168,85,247,0.4)]"
-                : "border-slate-700 bg-slate-900/60 text-slate-300 hover:border-purple-500/60 hover:text-purple-100"
+                ? "border-blue-400 bg-blue-600/20 text-blue-100 shadow-[0_0_0_1px_rgba(168,85,247,0.4)]"
+                : "border-slate-700 bg-slate-900/60 text-slate-300 hover:border-blue-600/60 hover:text-blue-100"
             }`}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-orange-400 to-purple-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-orange-400 to-blue-400" />
             {mode.label}
           </button>
         ))}
@@ -130,12 +198,12 @@ function InsightDemo() {
         <div className="mb-3 flex items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              Focus Area
+              Coaching Focus
             </p>
             <p className="text-sm font-medium text-slate-100">{current.label}</p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-slate-500">Session Insight</p>
+            <p className="text-xs text-slate-500">Session Metric</p>
             <p className="text-sm font-mono font-semibold text-emerald-300">
               {current.badge}
             </p>
@@ -147,8 +215,8 @@ function InsightDemo() {
         </p>
       </div>
       <p className="mt-3 text-[11px] text-slate-500">
-        Powered by structured prompts, Supabase telemetry, and Claude Sonnet
-        4.5—this is the same insight engine used in the live Track App portal.
+        AI summaries help speed up note-writing—coaches can edit, ignore, or rewrite entirely.
+        Metrics are calculated deterministically; AI is the assistive layer, not the decision-maker.
       </p>
     </div>
   );
@@ -173,7 +241,7 @@ function Section({
       className="relative border-t border-slate-900/80 bg-gradient-to-b from-slate-950 to-slate-950/95 px-4 py-16 sm:px-6 md:px-8 lg:px-12 lg:py-20"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 max-w-3xl">
+        <div className="mb-10 max-w-3xlmx-auto text-center">
           {eyebrow && (
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-orange-400/80">
               {eyebrow}
@@ -194,31 +262,19 @@ function Section({
   );
 }
 
-function PlaceholderImage({
-  label,
-}: {
-  label: string;
-}) {
-  return (
-    <div className="flex aspect-video items-center justify-center rounded-2xl border border-dashed border-slate-700 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-xs text-slate-500">
-      <span className="rounded-full border border-slate-700/80 bg-slate-900/70 px-3 py-1">
-        {label} – Placeholder
-      </span>
-    </div>
-  );
-}
 
-export default function TrackAppLandingPage() {
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+export default function TrackAppHeroPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
-      {/* Top glow */}
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-64 bg-gradient-to-b from-orange-500/15 via-purple-600/12 to-transparent blur-3xl" />
-
-      {/* Header */}
-      <header className="relative z-10 border-b border-slate-900/80 bg-slate-950/80 backdrop-blur">
+      {/* HEADER */}
+      <header className="fixed inset-x-0 top-0 z-30 border-b border-slate-900/40 bg-slate-950/30 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 md:px-8">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-red-500 to-purple-600 text-xs font-semibold tracking-tight text-slate-50 shadow-lg shadow-orange-500/40">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500  to-blue-600 text-xs font-semibold tracking-tight text-slate-50 shadow-lg shadow-orange-500/40">
               TA
             </div>
             <div className="flex flex-col">
@@ -226,10 +282,11 @@ export default function TrackAppLandingPage() {
                 Track App
               </span>
               <span className="text-[11px] text-slate-500">
-                AI Racing Coach for Amateur Drivers
+                Racing Analytics &amp; Coaching Platform
               </span>
             </div>
           </div>
+
           <nav className="hidden items-center gap-6 text-xs font-medium text-slate-300 md:flex">
             <a href="#features" className="hover:text-slate-50">
               Features
@@ -238,100 +295,162 @@ export default function TrackAppLandingPage() {
               Tech Stack
             </a>
             <a href="#numbers" className="hover:text-slate-50">
-              Execution
+              Performance
             </a>
             <a href="#story" className="hover:text-slate-50">
               Story
             </a>
           </nav>
+
           <div className="flex items-center gap-2">
             <a
               href="https://trackapp-portal.vercel.app"
               target="_blank"
               rel="noreferrer"
-              className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-purple-500/70 hover:text-white md:inline-flex"
+              className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-600/70 hover:text-white md:inline-flex"
             >
-              Live Demo
+              Live demo
             </a>
             <a
-              href="https://github.com/scottcollier10/track-app-mvp"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 px-3.5 py-1.5 text-xs font-semibold text-slate-50 shadow-lg shadow-orange-500/50 hover:brightness-110"
-            >
-              <span>See the Code</span>
+                href="https://trackapp-portal.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
+              >
+              See the code
             </a>
           </div>
         </div>
       </header>
 
-      {/* Hero */}
+      {/* HERO WITH BURST BACKGROUND */}
       <main className="relative z-10">
-        <section className="border-b border-slate-900/80 bg-gradient-to-b from-slate-950 via-slate-950 to-slate-950/95 px-4 pb-16 pt-10 sm:px-6 md:px-8 lg:px-12 lg:pb-20 lg:pt-16">
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center">
-            <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.32em] text-orange-400/80">
-                AI Racing Coach • Founder Build
-              </p>
-              <h1 className="text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl lg:text-5xl">
-                Track App: AI Racing Coach for Amateur Drivers
-              </h1>
-              <p className="mt-4 max-w-xl text-sm text-slate-300 sm:text-base">
-                Turn your track day data into actionable coaching insights. Built
-                with Next.js, Supabase, and Claude AI—designed to help drivers
-                improve faster without paying pro-coach rates every session.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <a
-                  href="https://trackapp-portal.vercel.app"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 px-5 py-2.5 text-sm font-semibold text-slate-50 shadow-lg shadow-orange-500/40 hover:brightness-110"
-                >
-                  View Live Demo
-                  <span className="ml-1.5 text-xs">↗</span>
-                </a>
-                <a
-                  href="https://github.com/scottcollier10/track-app-mvp"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-xs font-medium text-slate-200 hover:border-purple-500/70 hover:text-white"
-                >
-                  View the Code
-                </a>
-                <span className="text-[11px] text-slate-500">
-                  No signup required. Explore the session dashboard in your
-                  browser.
-                </span>
-              </div>
+        <section className="relative overflow-hidden border-b border-slate-900/70">
+          {/* Burst background */}
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <Image
+              src={heroBurst}
+              alt=""
+              fill
+              priority
+              className="object-cover opacity-90"
+            />
+            {/* Darken edges so text stays readable */}
+            <div className="absolute inset-0 bg-slate-950/40" />
+          </div>
 
-              {/* Stats bar */}
-              <div className="mt-8 grid grid-cols-2 gap-4 rounded-2xl border border-slate-800 bg-slate-950/80 p-4 text-xs text-slate-300 sm:grid-cols-4">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="space-y-1">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                      {stat.label}
+          <div className="mx-auto max-w-6xl px-4 pb-20 pt-24 text-center sm:px-6 md:px-8 lg:pt-28">
+            {/* Eyebrow */}
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-orange-300/80">
+              Portfolio • Track App
+            </p>
+
+            {/* Main headline */}
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl lg:text-[2.75rem]">
+              The coaching OS for track-day programs
+            </h1>
+
+            {/* Subhead */}
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-200 sm:text-base">
+              Track App turns raw lap data into coach-ready insights in under a
+              second. Built on Next.js and Supabase, tuned for HPDE coaches
+              managing 12–15 drivers per weekend.
+            </p>
+
+            {/* Top CTAs */}
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="https://trackapp-portal.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-slate-50 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
+              >
+                Test it live ↗
+              </a>
+              <a
+                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
+              >
+                Request pilot access
+              </a>
+            </div>
+
+            {/* Big hero card */}
+            <div className="mx-auto mt-10 max-w-4xl">
+              <div className="transform rounded-[32px] border border-slate-700/70 bg-slate-950/70 px-6 pb-8 pt-5 shadow-[0_0_140px_rgba(56,189,248,0.32)] md:scale-90">
+                {/* Card header */}
+                <div className="flex items-center justify-start gap-3 text-left">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                      Track App demo
                     </p>
-                    <p className="text-xs text-slate-100">{stat.value}</p>
+                    <p className="text-xs text-slate-300">
+                      Session view + coaching insights
+                    </p>
                   </div>
-                ))}
+                </div>
+
+                {/* Screenshot area */}
+                <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/80">
+                  <Image
+                    src={heroCoach}
+                    alt="Track App session dashboard screenshot"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 800px, 100vw"
+                  />
+                </div>
+
+                {/* Bottom CTA */}
+                <div className="mt-5 flex justify-center">
+                  <a
+                    href="https://trackapp-portal.vercel.app"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-full border border-slate-500/70 bg-slate-950/60 px-4 py-1.5 text-xs font-medium text-slate-100 hover:border-orange-400/80 hover:text-orange-100"
+                  >
+                    Test it live again ↗
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* Hero visual */}
-            <div className="space-y-4">
-              <PlaceholderImage label="Session Detail + AI Coaching Screenshot" />
-              <InsightDemo />
+            {/* Small meta row under hero */}
+            <div className="mx-auto mt-10 grid max-w-4xl gap-6 text-left text-xs text-slate-200 sm:grid-cols-3">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                  Timeline
+                </p>
+                <p className="mt-1">6 months (part-time)</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                  Scope
+                </p>
+                <p className="mt-1">
+                  Architecture, frontend, backend, data layer, AI pipeline
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                  Stack
+                </p>
+                <p className="mt-1">Next.js • Supabase • PostgreSQL • Claude</p>
+              </div>
             </div>
           </div>
         </section>
 
+        {/* ====================================================================== */}
+        {/* ALL SECTIONS FROM APP-PAGE.TSX BELOW */}
+        {/* ====================================================================== */}
+
         {/* What it does */}
         <Section
           id="features"
-          eyebrow="What It Does"
-          title="Built for Drivers Who Want to Improve"
-          kicker="Every feature is designed around actual track-day pain points: fragmented data, vague coaching, and no way to measure progress across seasons."
+          eyebrow="NEW in v2.4"
+          title="Production-Ready for Trackside Coaching"
+          kicker="Not just an MVP anymore—this is production-deployed coaching infrastructure. Mobile-first design means coaches review 12 drivers on iPhone in the paddock in under 2 minutes. No laptop required."
         >
           <div className="grid gap-8 md:grid-cols-3">
             {featureCards.map((card) => (
@@ -339,7 +458,7 @@ export default function TrackAppLandingPage() {
                 key={card.title}
                 className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-950/80 p-5 shadow-lg shadow-slate-950/60"
               >
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-red-500 to-purple-600 text-lg">
+                <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500  to-blue-600 text-lg">
                   {card.icon}
                 </div>
                 <div>
@@ -348,7 +467,15 @@ export default function TrackAppLandingPage() {
                   </h3>
                   <p className="mt-1 text-xs text-slate-400">{card.body}</p>
                 </div>
-                <PlaceholderImage label={`${card.title} UI`} />
+                <div className="relative mt-1 aspect-video overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
+                  <Image
+                    src={card.image}
+                    alt={`${card.title} UI mock`}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -357,49 +484,47 @@ export default function TrackAppLandingPage() {
         {/* Tech stack */}
         <Section
           id="stack"
-          eyebrow="How It's Built"
-          title="Modern Stack, Scalable Foundation"
-          kicker="Built like a platform from day one—not a throwaway prototype."
+          eyebrow="Production-Grade Engineering"
+          title="Built Mobile-First, Optimized for Performance"
+          kicker="Complete mobile responsive design across all pages. Card layouts on phone, table layouts on desktop. 50x query optimization eliminates N+1 problem. Sub-100ms page loads on production."
         >
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <div className="space-y-4 text-sm text-slate-300">
               <p>
-                Track App was built with production-grade tools from day one.
-                The goal wasn&apos;t just to ship an app—it was to prove a
-                scalable architecture for AI-assisted coaching.
+                Track App v2.4 represents a major production milestone: mobile-first 
+                responsive design, 50x performance optimization, and advanced filtering 
+                with CSV export. This isn't a prototype—it's production-deployed 
+                coaching infrastructure.
               </p>
               <div>
                 <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  The Stack
+                  Mobile-First Architecture
                 </h3>
                 <ul className="mt-2 grid gap-2 text-xs text-slate-300 sm:grid-cols-2">
-                  <li>• Frontend: Next.js 14 (App Router, RSC)</li>
-                  <li>• Backend: Supabase (PostgreSQL, RLS, real-time)</li>
-                  <li>• AI: Claude Sonnet 4.5 with structured outputs</li>
-                  <li>• Deployment: Vercel Edge Network</li>
-                  <li>• Type Safety: TypeScript strict mode</li>
-                  <li>• Testing: Vitest + React Testing Library</li>
+                  <li>• Responsive breakpoints: mobile/tablet/desktop</li>
+                  <li>• Card layouts on phone (&lt;768px)</li>
+                  <li>• Table layouts on desktop (≥1024px)</li>
+                  <li>• Touch-optimized interactions (48px targets)</li>
+                  <li>• Professional loading skeleton states</li>
+                  <li>• Collapsible sections for mobile efficiency</li>
                 </ul>
               </div>
               <div>
                 <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  Why These Choices Matter
+                  Performance Optimization (50x Improvement)
                 </h3>
                 <ul className="mt-2 space-y-2 text-xs text-slate-300">
                   <li>
-                    • PostgreSQL enables real cross-session queries and
-                    longitudinal performance tracking.
+                    • Problem: 50+ database queries per page (N+1 issue, 3-5s loads)
                   </li>
                   <li>
-                    • Multi-tenant design supports coaches managing multiple
-                    drivers from day one.
+                    • Solution: Single optimized query with Supabase aggregations
                   </li>
                   <li>
-                    • Server components keep the client bundle lean and fast.
+                    • Result: Sub-100ms page loads, scalable to 1,000+ sessions
                   </li>
                   <li>
-                    • AI pipeline ships with cost and latency telemetry baked
-                    in.
+                    • Consistent data layer architecture across Home, Sessions, Coach Dashboard
                   </li>
                 </ul>
               </div>
@@ -408,7 +533,7 @@ export default function TrackAppLandingPage() {
             <div className="space-y-4">
               <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  Tech Stack Snapshot
+                  Tech Stack
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {techStack.map((item) => (
@@ -421,49 +546,43 @@ export default function TrackAppLandingPage() {
                   ))}
                 </div>
               </div>
-              <PlaceholderImage label="Architecture / Folder Structure" />
+              <div className="relative aspect-video overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
+                <Image
+                  src={mobileDashboard}
+                  alt="Mobile-first responsive dashboard mock"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 420px, (min-width: 640px) 60vw, 100vw"
+                />
+              </div>
             </div>
           </div>
         </Section>
 
-        {/* Feature grid */}
+        {/* Core capabilities */}
         <Section
-          eyebrow="Capabilities"
-          title="What You Can Do Right Now"
+          id="capabilities"
+          eyebrow="CORE CAPABILITIES"
+          title="Everything Coaches Need, Trackside"
+          kicker="Mobile-optimized workflows for coaches reviewing 12–15 drivers between 20-minute sessions. Card-based layouts on phone, table layouts on desktop."
         >
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              "Session Management",
-              "Track Directory",
-              "Lap Analysis",
-              "Driver Profile",
-              "Session Insights",
-              "AI Coaching",
-            ].map((title, idx) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {coreCapabilities.map((cap) => (
               <div
-                key={title}
-                className="flex flex-col gap-3 rounded-2xl border border-slate-800 bg-slate-950/80 p-4"
+                key={cap.title}
+                className="flex flex-col gap-3 rounded-2xl border border-slate-800 bg-slate-950/80 p-5"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  {String(idx + 1).padStart(2, "0")}
-                </p>
-                <h3 className="text-sm font-semibold text-slate-50">{title}</h3>
-                <p className="text-xs text-slate-400">
-                  {/* Short descriptive blurbs tailored per feature */}
-                  {title === "Session Management" &&
-                    "View all track sessions in one place—sortable by date, track, best lap, or lap count."}
-                  {title === "Track Directory" &&
-                    "Browse circuits with history, all-time records, and stats per track."}
-                  {title === "Lap Analysis" &&
-                    "Inspect every lap with formatted times, deltas, and visual consistency scoring."}
-                  {title === "Driver Profile" &&
-                    "See total sessions, all-time best lap, and favorite tracks at a glance."}
-                  {title === "Session Insights" &&
-                    "Automatic consistency scoring, pace trends, and fatigue analysis."}
-                  {title === "AI Coaching" &&
-                    "Prioritized recommendations so you always know what to work on next."}
-                </p>
-                <PlaceholderImage label={`${title} Screenshot`} />
+                <h3 className="text-sm font-semibold text-slate-50">{cap.title}</h3>
+                <p className="text-xs text-slate-400">{cap.description}</p>
+                <div className="relative mt-1 aspect-video overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
+                  <Image
+                    src={cap.image}
+                    alt={`${cap.title} screenshot mock`}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -472,8 +591,8 @@ export default function TrackAppLandingPage() {
         {/* Numbers */}
         <Section
           id="numbers"
-          eyebrow="Execution"
-          title="Shipped Fast, Built to Last"
+          eyebrow="Execution Metrics"
+          title="Production-Deployed & Performance-Optimized"
         >
           <div className="grid gap-6 md:grid-cols-3">
             {metrics.map((block) => (
@@ -492,81 +611,119 @@ export default function TrackAppLandingPage() {
               </div>
             ))}
           </div>
+          
+          <div className="mt-8 rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-blue-600/10 p-6">
+            <div className="flex items-start gap-4">
+              <span className="text-3xl">⚡</span>
+              <div>
+                <h3 className="text-sm font-semibold text-orange-400">
+                  Performance Optimization Deep-Dive
+                </h3>
+                <p className="mt-2 text-xs text-slate-300">
+                  <strong className="text-slate-100">The Problem:</strong> Early builds suffered from N+1 query problems—
+                  50+ database queries per page load resulted in 3-5 second load times. Unusable on mobile, frustrating on desktop.
+                </p>
+                <p className="mt-2 text-xs text-slate-300">
+                  <strong className="text-slate-100">The Solution:</strong> Rebuilt data layer with Supabase aggregations. 
+                  Single optimized query using COUNT, MAX, and JOIN operations. Server-side aggregation instead of client-side loops.
+                </p>
+                <p className="mt-2 text-xs text-slate-300">
+                  <strong className="text-slate-100">The Result:</strong> 50x performance improvement. 
+                  Sub-100ms page loads on production. Scalable to 1,000+ sessions. Same pattern applied across Home, Sessions, and Coach Dashboard pages.
+                </p>
+              </div>
+            </div>
+          </div>
         </Section>
 
         {/* Story */}
         <Section
           id="story"
-          eyebrow="Founder Story"
-          title="Building a Platform, Not Just an App"
+          eyebrow="Why Mobile-First Matters"
+          title="Built for Real Trackside Coaching Workflows"
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
             <div className="space-y-4 text-sm text-slate-300">
               <p>
-                Most track apps are built like mobile games: ship fast, worry
-                about scale later. Track App took the opposite approach—80% of
-                the effort in architecture, 20% in features.
+                Coaches don't work at desks with dual monitors. They work in paddocks 
+                between 20-minute sessions, reviewing data on phones or tablets while 
+                drivers prep for the next run group.
               </p>
               <p>
-                That means PostgreSQL instead of Firebase, multi-tenant design
-                for coaches and drivers, and an AI pipeline with structured
-                prompts and telemetry baked in.
+                Track App v2.4 is built mobile-first from the ground up—not a desktop 
+                app squeezed onto a phone. Card-based mobile layouts. Touch-optimized 
+                interactions. Advanced filtering without cluttering small screens. 
+                Professional loading states that don't jarring flash blank screens.
               </p>
               <p>
-                The result? Features that now ship in hours instead of months.
-                Comparing a driver&apos;s last 10 sessions at the same track is
-                just a clean SQL query—not a refactor.
+                The 50x performance optimization isn't just a tech flex—it means coaches 
+                can review 12 drivers in under a minute, not 10+ minutes waiting for pages 
+                to load. That's the difference between useful coaching infrastructure and 
+                another abandoned dashboard.
               </p>
             </div>
-            <PlaceholderImage label="Legacy vs Track App Architecture Diagram" />
+            <div className="relative aspect-video overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
+              <Image
+                src={heroCoachCu}
+                alt="Coach using Track App on a tablet in the paddock"
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 420px, (min-width: 640px) 60vw, 100vw"
+              />
+            </div>
           </div>
         </Section>
 
         {/* Open to opportunities */}
         <Section
-          eyebrow="Why Share This?"
-          title="Open to Opportunities"
+          eyebrow="Ready for Pilot Testing"
+          title="Production-Deployed for HPDE Programs"
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <div className="space-y-4 text-sm text-slate-300">
               <p>
-                Track App started as a way to solve my own problem as an
-                amateur racer—and became a proof of concept for a scalable,
-                AI-assisted coaching platform.
+                Track App v2.4 is production-deployed and stable at trackapp-portal.vercel.app. 
+                This isn't a prototype—it's ready for real coaching use with real programs.
               </p>
               <p className="text-sm font-semibold text-slate-100">
-                I&apos;m especially interested in:
+                Ideal for:
               </p>
               <ul className="space-y-1.5 text-xs text-slate-300">
-                <li>• Partnerships with racing clubs and driving schools</li>
-                <li>• Collaborators who want to ship real product</li>
-                <li>• Feedback from drivers and coaches</li>
-                <li>• Roles where platform thinking and execution speed matter</li>
+                <li>• HPDE coaches managing 12-20 drivers per event</li>
+                <li>• Driving schools looking for professional coaching infrastructure</li>
+                <li>• Club racing programs that need mobile-first dashboards</li>
+                <li>• Karting academies focused on longitudinal driver development</li>
               </ul>
               <p className="text-xs text-slate-400">
-                Not looking for funding yet—product-market fit comes first.
+                Pilot program available—let's validate the workflow with your program 
+                and refine features based on real weekend feedback.
               </p>
             </div>
             <div className="space-y-3 rounded-2xl border border-slate-800 bg-slate-950/80 p-5 text-xs text-slate-200">
               <p className="font-semibold text-slate-50">
-                Let&apos;s talk if you&apos;re:
+                Request Pilot Program Access
               </p>
-              <ul className="space-y-1.5">
-                <li>• An employer looking for a builder with end-to-end chops</li>
-                <li>• A team exploring AI-powered motorsport tools</li>
-                <li>• A coach who wants scalable, data-driven insights</li>
-              </ul>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <p className="text-xs text-slate-400">
+                Production-ready coaching infrastructure. Mobile-first design. 
+                50x performance optimization. Ready to test with your program.
+              </p>
+              <div className="mt-3 flex flex-col gap-2">
+                <a
+                  href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Program"
+                  className="inline-flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-orange-500  to-blue-600 px-4 py-2 text-xs font-semibold text-slate-50 shadow-lg shadow-orange-500/40 hover:brightness-110"
+                >
+                  Email: me@scott-collier.com
+                </a>
                 <a
                   href="https://trackapp-portal.vercel.app"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex flex-1 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-slate-100 hover:border-purple-500/60 hover:text-white"
+                  className="inline-flex flex-1 items-center justify-center rounded-full border border-slate-700 bg-slate-900 px-4 py-2 text-xs font-medium text-slate-200 hover:border-blue-600/60 hover:text-white"
                 >
-                  Try the Live Demo
+                  View Live Demo
                 </a>
                 <a
-                  href="https://linkedin.com/in/scottcollier"
+                  href="https://linkedin.com/in/scott-collier"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex flex-1 items-center justify-center rounded-full border border-slate-700 px-4 py-2 text-xs font-medium text-slate-200 hover:border-orange-500/70 hover:text-white"
@@ -582,7 +739,7 @@ export default function TrackAppLandingPage() {
       {/* Footer */}
       <footer className="border-t border-slate-900/80 bg-slate-950 px-4 py-6 text-[11px] text-slate-500 sm:px-6 md:px-8 lg:px-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 sm:flex-row">
-          <p>Built in public • Track App MVP</p>
+          <p>Production-Ready, Mobile-First Coach OS • Track App v2.4</p>
           <div className="flex flex-wrap items-center gap-3">
             <a
               href="https://trackapp-portal.vercel.app"
@@ -594,12 +751,10 @@ export default function TrackAppLandingPage() {
             </a>
             <span className="h-1 w-1 rounded-full bg-slate-700" />
             <a
-              href="https://github.com/scottcollier10/track-app-mvp"
-              target="_blank"
-              rel="noreferrer"
+              href="mailto:me@scott-collier.com"
               className="hover:text-slate-300"
             >
-              GitHub
+              Request Pilot Access
             </a>
             <span className="h-1 w-1 rounded-full bg-slate-700" />
             <a
