@@ -21,13 +21,6 @@ import coreCsv from "@/public/images/core-csv-export.webp";
 // DATA ARRAYS
 // ============================================================================
 
-const stats = [
-  { label: "50x Faster", value: "Sub-100ms page loads" },
-  { label: "14,000+ LOC", value: "Production-ready code" },
-  { label: "Mobile-First", value: "Phone, tablet, desktop" },
-  { label: "Pilot-Ready", value: "Deployed & stable" },
-];
-
 const featureCards = [
   {
     icon: "📱",
@@ -129,36 +122,6 @@ const coreCapabilities = [
 ];
 
 
-const insightModes = [
-  {
-    id: "consistency",
-    label: "Consistency",
-    badge: "89 / 100",
-    description:
-      "Driver maintaining lap times within 0.8s of best lap across 12 laps. Strong foundation—coaching focus: tighten mid-session variance and work on late-session concentration.",
-    meta: "Stable across session",
-  },
-  {
-    id: "pace",
-    label: "Pace Trend",
-    badge: "Improving",
-    description:
-      "Last 3 laps averaging 0.4s faster than opening laps. Driver building confidence through session—next coaching priority: braking consistency into technical sections.",
-    meta: "Progressive improvement",
-  },
-  {
-    id: "fatigue",
-    label: "Session Pattern",
-    badge: "Late Fade",
-    description:
-      "Performance drop in final laps suggests mental fatigue rather than mechanical issues. Coaching recommendation: reset focus protocol before push laps, hydration check.",
-    meta: "Concentration management",
-  },
-] as const;
-
-type InsightId = (typeof insightModes)[number]["id"];
-
-
 // ============================================================================
 // HELPER COMPONENTS
 // ============================================================================
@@ -241,7 +204,7 @@ function Section({
       className="relative border-t border-slate-900/80 bg-gradient-to-b from-slate-950 to-slate-950/95 px-4 py-16 sm:px-6 md:px-8 lg:px-12 lg:py-20"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 max-w-3xlmx-auto text-center">
+        <div className="mb-10 max-w-3xl mx-auto text-center">
           {eyebrow && (
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-orange-400/80">
               {eyebrow}
@@ -312,7 +275,7 @@ export default function TrackAppHeroPage() {
               Live demo
             </a>
             <a
-                href="https://trackapp-portal.vercel.app"
+                href="https://github.com/scottcollier10/track-app-mvp"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
@@ -399,18 +362,6 @@ export default function TrackAppHeroPage() {
                     className="object-cover"
                     sizes="(min-width: 1024px) 800px, 100vw"
                   />
-                </div>
-
-                {/* Bottom CTA */}
-                <div className="mt-5 flex justify-center">
-                  <a
-                    href="https://trackapp-portal.vercel.app"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-full border border-slate-500/70 bg-slate-950/60 px-4 py-1.5 text-xs font-medium text-slate-100 hover:border-orange-400/80 hover:text-orange-100"
-                  >
-                    Test it live again ↗
-                  </a>
                 </div>
               </div>
             </div>
@@ -758,7 +709,7 @@ export default function TrackAppHeroPage() {
             </a>
             <span className="h-1 w-1 rounded-full bg-slate-700" />
             <a
-              href="https://linkedin.com/in/scottcollier"
+              href="https://linkedin.com/in/scott-collier"
               target="_blank"
               rel="noreferrer"
               className="hover:text-slate-300"
