@@ -304,14 +304,16 @@ export default function TrackAppHeroPage() {
 
                 {/* Screenshot area */}
                 <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/80">
-                  <Image
-                    src={heroCoach}
-                    alt="Track App session dashboard screenshot"
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 800px, 100vw"
-                  />
-                </div>
+				  <iframe
+					src="https://player.vimeo.com/video/1144041213?badge=0&autopause=0&autoplay=1&loop=1&muted=1&background=1"
+					className="h-full w-full"
+					allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+					allowFullScreen
+					loading="lazy"
+					referrerPolicy="strict-origin-when-cross-origin"
+					title="Track App hero demo"
+				  />
+				</div>
               </div>
             </div>
 
