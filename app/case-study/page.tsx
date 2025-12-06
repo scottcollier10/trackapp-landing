@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import trackLogo from "@/public/images/trackapp-logo.png";
 import heroBurst from "@/public/images/hero-burst.webp";
 import heroCoach from "@/public/images/trackapp-hero-coach-tablet.webp";
 import heroCoachCu from "@/public/images/trackapp-hero-coach-tablet-cu.webp";
@@ -178,9 +179,15 @@ export default function TrackAppHeroPage() {
       <header className="fixed inset-x-0 top-0 z-30 border-b border-slate-900/40 bg-slate-950/30 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 md:px-8">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500  to-blue-600 text-xs font-semibold tracking-tight text-slate-50 shadow-lg shadow-orange-500/40">
-              TA
-            </div>
+            <div className="flex h-8 w-8 items-center justify-center">
+			  <Image
+				src={trackLogo}
+				alt="Track App logo"
+				width={32}
+				height={32}
+				className="h-8 w-8 object-contain"
+			  />
+			</div>
             <div className="flex flex-col">
               <span className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
                 Track App
