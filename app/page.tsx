@@ -365,9 +365,6 @@ export default function TrackAppHeroPage() {
                 key={card.title}
                 className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-950/80 p-5 shadow-lg shadow-slate-950/60"
               >
-                <div className="inline-flex">
-                  {card.icon}
-                </div>
                 <div>
                   <h3 className="text-sm font-semibold text-slate-50">
                     {card.title}
