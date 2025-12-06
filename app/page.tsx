@@ -24,19 +24,16 @@ import coreCsv from "@/public/images/core-csv-export.webp";
 
 const featureCards = [
   {
-    icon: "📱",
     title: "Mobile-First Dashboard",
     body: "Designed for phone first—not a desktop UI crushed onto a small screen. Card layouts on mobile, tables on desktop, so coaches can review 12 drivers in under 2 minutes between sessions.",
     image: featureMobile,
   },
   {
-    icon: "⚡",
     title: "50x Performance Optimization",
     body: "Rebuilt the data layer to remove N+1 queries—50+ calls collapsed into a single optimized query. Sub-100ms page loads in production with headroom for 1,000+ sessions.",
     image: featurePerf,
   },
   {
-    icon: "🔍",
     title: "Advanced Filtering & Export",
     body: "Global search and multi-select filters for track, driver, date, and class. Sortable columns, sticky filters, and CSV export for full-weekend and program-level analysis.",
     image: featureFilters,
@@ -216,20 +213,12 @@ export default function TrackAppHeroPage() {
 
           <div className="flex items-center gap-2">
             <a
-              href="https://trackapp-portal.vercel.app"
-              target="_blank"
-              rel="noreferrer"
-              className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-600/70 hover:text-white md:inline-flex"
-            >
-              Live demo
-            </a>
-            <a
-                href="https://github.com/scottcollier10/track-app-mvp"
+                href="https://trackapp-portal.vercel.app"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-              See the code
+              Live demo
             </a>
           </div>
         </div>
@@ -304,42 +293,58 @@ export default function TrackAppHeroPage() {
 
                 {/* Screenshot area */}
                 <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/80">
-			  <iframe
-				src="https://player.vimeo.com/video/1144041213?badge=0&autopause=0&autoplay=1&loop=1&muted=1&background=1"
-				className="absolute inset-0 h-full w-full"  // ✅ Absolutely positioned
-				allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-				allowFullScreen
-				loading="lazy"
-				referrerPolicy="strict-origin-when-cross-origin"
-				title="Track App hero demo"
-			  />
-			</div>
+                  <Image
+                    src={heroCoach}
+                    alt="Track App session dashboard screenshot"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 800px, 100vw"
+                  />
+                </div>
               </div>
             </div>
 
             {/* Small meta row under hero */}
-            <div className="mx-auto mt-10 grid max-w-4xl gap-6 text-left text-xs text-slate-200 sm:grid-cols-3">
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                  Timeline
-                </p>
-                <p className="mt-1">6 months (part-time)</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                  Scope
-                </p>
-                <p className="mt-1">
-                  Architecture, frontend, backend, data layer, AI pipeline
-                </p>
-              </div>
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                  Stack
-                </p>
-                <p className="mt-1">Next.js • Supabase • PostgreSQL • Claude</p>
-              </div>
-            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+		  <div>
+			<p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
+			  WEEKEND IMPACT
+			</p>
+			<p className="mt-2 text-sm font-semibold text-slate-50">
+			  Less admin, more coaching
+			</p>
+			<p className="mt-1 text-sm text-slate-400">
+			  Review 10–15 drivers between sessions without juggling apps or spreadsheets.
+			  One place for pace trends, best laps, and coaching notes.
+			</p>
+		  </div>
+
+		  <div>
+			<p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
+			  BUILT FOR
+			</p>
+			<p className="mt-2 text-sm font-semibold text-slate-50">
+			  HPDE &amp; track-day programs
+			</p>
+			<p className="mt-1 text-sm text-slate-400">
+			  Designed around HPDE weekends, private coaching days, and multi-driver
+			  programs—not pro telemetry teams or data engineers.
+			</p>
+		  </div>
+
+		  <div>
+			<p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
+			  PLAYS NICE WITH
+			</p>
+			<p className="mt-2 text-sm font-semibold text-slate-50">
+			  Your existing timing apps
+			</p>
+			<p className="mt-1 text-sm text-slate-400">
+			  Works alongside tools like RaceChrono, RaceBox, and AiM. No new hardware
+			  required—import CSVs and start coaching from one dashboard.
+			</p>
+		  </div>
+		</div>
           </div>
         </section>
 
@@ -350,9 +355,9 @@ export default function TrackAppHeroPage() {
         {/* What it does */}
         <Section
           id="features"
-          eyebrow="NEW in v2.4"
-          title="Production-Ready for Trackside Coaching"
-          kicker="Not just an MVP anymore—this is production-deployed coaching infrastructure. Mobile-first design means coaches review 12 drivers on iPhone in the paddock in under 2 minutes. No laptop required."
+          eyebrow="READY FOR REAL HPDE WEEKENDS"
+          title="Built for real trackside coaching"
+          kicker="Track App turns raw lap data into coach-ready decisions in seconds. Review up to 12 drivers on your phone between sessions, spot trends faster, and carry a persistent history from event to event—without living in spreadsheets."
         >
           <div className="grid gap-8 md:grid-cols-3">
             {featureCards.map((card) => (
@@ -360,7 +365,7 @@ export default function TrackAppHeroPage() {
                 key={card.title}
                 className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-950/80 p-5 shadow-lg shadow-slate-950/60"
               >
-                <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500  to-blue-600 text-lg">
+                <div className="inline-flex">
                   {card.icon}
                 </div>
                 <div>
