@@ -18,6 +18,7 @@ import coreFilter from "@/public/images/core-advanced-filtering.webp";
 import coreCsv from "@/public/images/core-csv-export.webp";
 
 
+
 // ============================================================================
 // DATA ARRAYS
 // ============================================================================
@@ -213,12 +214,20 @@ export default function TrackAppHeroPage() {
 
           <div className="flex items-center gap-2">
             <a
-                href="https://trackapp-portal.vercel.app"
+              href="https://trackapp-portal.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-600/70 hover:text-white md:inline-flex"
+            >
+              Live demo
+            </a>
+            <a
+                href="https://github.com/scottcollier10/track-app-mvp"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-              Live demo
+              See the code
             </a>
           </div>
         </div>
@@ -276,33 +285,53 @@ export default function TrackAppHeroPage() {
               </a>
             </div>
 
-            {/* Big hero card */}
-            <div className="mx-auto mt-10 max-w-4xl">
-              <div className="transform rounded-[32px] border border-slate-700/70 bg-slate-950/70 px-6 pb-8 pt-5 shadow-[0_0_140px_rgba(56,189,248,0.32)] md:scale-90">
-                {/* Card header */}
-                <div className="flex items-center justify-start gap-3 text-left">
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
-                      Track App demo
-                    </p>
-                    <p className="text-xs text-slate-300">
-                      Session view + coaching insights
-                    </p>
-                  </div>
-                </div>
+            {/* Hero demo card – whole thing is clickable */}
+			<a
+			  href="https://trackapp-portal.vercel.app"
+			  target="_blank"
+			  rel="noreferrer"
+			  className="group mt-10 block"
+			>
+			  <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-950/70 shadow-[0_24px_80px_rgba(15,23,42,0.9)] backdrop-blur">
+				{/* This wrapper gives the image actual height */}
+				<div className="relative aspect-[16/9] w-full">
+				  <Image
+					src={heroCoach}
+					alt="Track App mobile coaching screens"
+					fill
+					priority
+					className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+				  />
 
-                {/* Screenshot area */}
-                <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/80">
-                  <Image
-                    src={heroCoach}
-                    alt="Track App session dashboard screenshot"
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 800px, 100vw"
-                  />
-                </div>
-              </div>
-            </div>
+				  {/* Soft gradient overlay */}
+				  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/0 to-slate-950/0" />
+
+				  {/* Top label row */}
+				  <div className="absolute inset-x-0 top-0 flex items-center justify-between px-6 pt-4 text-xs font-medium text-slate-200 md:px-8">
+					<div className="flex flex-col gap-0.5">
+					  <span className="text-[0.65rem] uppercase tracking-[0.16em] text-slate-400">
+						Track App demo
+					  </span>
+					  <span className="text-[0.7rem] text-slate-200">
+						Session view • coaching insights
+					  </span>
+					</div>
+				  </div>
+
+				  {/* FIXED: Centered "Test it live" CTA - both horizontally AND vertically */}
+				<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+				  <button
+					type="button"
+					className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/12 bg-white-950/60 px-7 py-2.5 text-sm md:text-base font-semibold text-slate-50 shadow-[0_18px_45px_rgba(0,0,0,0.75)] backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-slate-950/80"
+				  >
+					Test it live
+					<span className="text-xs md:text-sm">↗</span>
+				  </button>
+				</div>
+				</div>
+			  </div>
+			</a>
+
 
             {/* Small meta row under hero */}
             <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -318,20 +347,18 @@ export default function TrackAppHeroPage() {
 			  One place for pace trends, best laps, and coaching notes.
 			</p>
 		  </div>
-
 		  <div>
 			<p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
 			  BUILT FOR
 			</p>
 			<p className="mt-2 text-sm font-semibold text-slate-50">
-			  HPDE &amp; track-day programs
+			  HPDE & track-day programs
 			</p>
 			<p className="mt-1 text-sm text-slate-400">
 			  Designed around HPDE weekends, private coaching days, and multi-driver
-			  programs—not pro telemetry teams or data engineers.
+			  programs—not pie-in-the-sky telemetry or teams with data engineers.
 			</p>
 		  </div>
-
 		  <div>
 			<p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
 			  PLAYS NICE WITH
@@ -340,8 +367,8 @@ export default function TrackAppHeroPage() {
 			  Your existing timing apps
 			</p>
 			<p className="mt-1 text-sm text-slate-400">
-			  Works alongside tools like RaceChrono, RaceBox, and AiM. No new hardware
-			  required—import CSVs and start coaching from one dashboard.
+			  Works alongside tools like RaceChrono, RaceBox, and AiM. No new
+			  hardware required—import CSVs and start coaching from one dashboard.
 			</p>
 		  </div>
 		</div>
@@ -355,9 +382,9 @@ export default function TrackAppHeroPage() {
         {/* What it does */}
         <Section
           id="features"
-          eyebrow="READY FOR REAL HPDE WEEKENDS"
-          title="Built for real trackside coaching"
-          kicker="Track App turns raw lap data into coach-ready decisions in seconds. Review up to 12 drivers on your phone between sessions, spot trends faster, and carry a persistent history from event to event—without living in spreadsheets."
+          eyebrow="NEW in v2.4"
+          title="Production-Ready for Trackside Coaching"
+          kicker="Not just an MVP anymore—this is production-deployed coaching infrastructure. Mobile-first design means coaches review 12 drivers on iPhone in the paddock in under 2 minutes. No laptop required."
         >
           <div className="grid gap-8 md:grid-cols-3">
             {featureCards.map((card) => (
