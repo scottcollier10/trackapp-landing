@@ -54,13 +54,13 @@ export default function Navigation() {
             Live demo
           </Link>
           <a
-            href="https://github.com/scottcollier10/trackapp-landing"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
-          >
-            See the code
-          </a>
+                href="https://trackapp-landing.vercel.app/session/"
+                target="_self"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
+              >
+              Beta Features
+            </a>
         </div>
       </div>
     </header>
