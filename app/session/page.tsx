@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import Image from "next/image";
 import Navigation from "@/components/Navigation";
+import trackLogo from "@/public/images/track-logo.png";
 import { SpeedChart } from "@/components/charts/SpeedChart";
 import { ThrottleChart } from "@/components/charts/ThrottleChart";
 import { BrakeChart } from "@/components/charts/BrakeChart";
@@ -20,7 +21,7 @@ import {
   brakeData,
   compositeData,
 } from "@/lib/mockTelemetryData";
-import heroBurst from "@/public/images/hero-burst-app.webp";
+import heroBurst from "@/public/images/hero-burst.webp";
 
 type Severity = "info" | "warn" | "critical";
 
@@ -419,7 +420,7 @@ export default function SessionReviewPage() {
       </div>
 
       {/* Main Content - add top padding for fixed nav */}
-      <main className="pt-20 mx-auto flex max-w-6xl flex-col gap-8 px-4 pb-16 lg:px-6">
+      <main className="pt-28 mx-auto flex max-w-6xl flex-col gap-8 px-4 pb-16 lg:px-6">
         {/* Header */}
         <section>
           <p className="text-xs font-semibold tracking-[0.35em] text-amber-400/80">

@@ -222,12 +222,12 @@ export default function TrackAppHeroPage() {
               Live demo
             </a>
             <a
-                href="https://github.com/scottcollier10/track-app-mvp"
+                href="https://trackapp-portal.vercel.app/session"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-              See the code
+              Beta Features
             </a>
           </div>
         </div>
