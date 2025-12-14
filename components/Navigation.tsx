@@ -48,7 +48,7 @@ export default function Navigation() {
         {/* CTA Buttons */}
         <div className="flex items-center gap-2">
           <a
-              href="https://trackapp-portal.vercel.app"
+              href="https://trackapp-portal.vercel.app/coach"
               target="_blank"
               rel="noreferrer"
               className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-600/70 hover:text-white md:inline-flex"
