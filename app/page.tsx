@@ -222,8 +222,8 @@ export default function TrackAppHeroPage() {
               Live demo
             </a>
             <a
-                href="https://trackapp-portal.vercel.app/session"
-                target="_blank"
+                href="https://trackapp-landing.vercel.app/session/"
+                target="_self"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
