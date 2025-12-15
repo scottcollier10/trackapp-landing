@@ -237,7 +237,7 @@ export default function SessionReviewPage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timelineRef = useRef<HTMLDivElement | null>(null);
 
-  const [videoSrc, setVideoSrc] = useState<string>("/demo/session-demo.mp4");
+  const [videoSrc, setVideoSrc] = useState<string>("https://72wwpkyupbfa6lbi.public.blob.vercel-storage.com/demo/demo-lap.mp4");
   const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [annotations, setAnnotations] = useState<Annotation[]>([]);
