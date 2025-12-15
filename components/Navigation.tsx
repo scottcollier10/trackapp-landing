@@ -31,6 +31,9 @@ export default function Navigation() {
 
         {/* Desktop Nav Links */}
         <nav className="hidden items-center gap-6 text-xs font-medium text-slate-300 md:flex">
+	  <a href="/" className="hover:text-slate-50">
+            Home
+          </a>
           <a href="/#features" className="hover:text-slate-50">
             Features
           </a>
