@@ -503,7 +503,7 @@ export default function SessionReviewPage() {
               Driver
             </p>
             <div className="mt-2 text-lg font-semibold text-slate-50">
-              Marc Richardson
+              Ryan Yardley
             </div>
             <p className="mt-1 text-xs text-slate-500">
               Thunderhill Raceway · HPDE 3
