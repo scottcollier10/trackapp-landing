@@ -222,7 +222,7 @@ export default function TrackAppHeroPage() {
               rel="noreferrer"
               className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
             >
-              Coach Dashboard
+              Live Demo
             </a>
             <a
                 href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
@@ -263,7 +263,7 @@ export default function TrackAppHeroPage() {
 
             {/* Subhead */}
             <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-200 sm:text-base">
-              Track App turns raw lap data into coach-ready insights in under a second. Export CSV from RaceChrono / TrackAddict / AiM → upload to the coach portal → coach from one mobile-first dashboard.
+              Track App turns lap data into coach-ready insights in under a second. Export CSV from RaceChrono / TrackAddict / AiM → upload to the portal → coach from one mobile dashboard.
             </p>
 
             {/* Top CTAs */}
@@ -285,8 +285,8 @@ export default function TrackAppHeroPage() {
                  Try CSV Import ↗
               </a>
             </div>
-
-            <ul className="mx-auto mt-4 flex max-w-3xl flex-col items-center justify-center gap-2 text-xs text-slate-200 sm:flex-row sm:gap-6">
+	  	
+            <ul className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-2 text-xs text-slate-200 sm:flex-row sm:gap-6">
               <li className="inline-flex items-center gap-2">
                 <span className="text-amber-400">✓</span> No iOS app required (CSV-first)
               </li>
@@ -439,7 +439,7 @@ export default function TrackAppHeroPage() {
           </div>
 
           <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-800/60 bg-slate-950/30 p-5 text-sm text-slate-300">
-            <p className="font-semibold text-slate-50">Quick clarity (the “Dave” question):</p>
+            <p className="font-semibold text-slate-50">Quick clarity:</p>
             <p className="mt-2">
               RaceChrono (and friends) capture laps. Track App is the coaching layer—multi-driver review, comparison, and repeatable feedback across weekends.
             </p>
