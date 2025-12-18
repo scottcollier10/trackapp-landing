@@ -269,26 +269,20 @@ export default function TrackAppHeroPage() {
             {/* Top CTAs */}
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <a
-                href="https://trackapp-portal.vercel.app/import"
+                href="https://trackapp-portal.vercel.app/coach"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-                Try CSV Import ↗
+                View Dashboard ↗
               </a>
               <a
-                href="https://trackapp-portal.vercel.app/coach"
+                href="https://trackapp-portal.vercel.app/import"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-5 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
               >
-                Coach dashboard demo ↗
-              </a>
-              <a
-                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
-              >
-                Request pilot access
+                 Try CSV Import ↗
               </a>
             </div>
 
