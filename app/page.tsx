@@ -56,7 +56,7 @@ const metrics = [
   {
     title: "Development Timeline",
     items: [
-      "Started: May 2024",
+      "Started: Jul 2025",
       "v2.4 Shipped: Dec 2025",
       "Production-deployed & stable",
     ],
@@ -280,7 +280,7 @@ export default function TrackAppHeroPage() {
                 href="https://trackapp-portal.vercel.app/import"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-5 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
+                className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-5 py-2.5 text-sm font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
               >
                  Try CSV Import ↗
               </a>
