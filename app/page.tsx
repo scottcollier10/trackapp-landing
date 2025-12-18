@@ -125,6 +125,109 @@ const coreCapabilities = [
 // HELPER COMPONENTS
 // ============================================================================
 
+// FAQ Accordion Component
+function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: "Is this another lap timer app?",
+      answer: "Not exactly — Track App has an iOS capture app, but we're not trying to replace RaceChrono or TrackAddict. The real value is the coaching layer. If your drivers already use RaceChrono, they can keep using it and import that data. If they don't have a timer yet, our iOS app integrates directly with the coach dashboard. Either way, the focus is on coach workflows, not competing on telemetry features."
+    },
+    {
+      question: "What does it actually do that RaceChrono doesn't?",
+      answer: "RaceChrono is built for individual drivers. Track App is built for coaches managing 10-15 drivers per weekend. Multi-driver dashboard, persistent coaching notes, and longitudinal progress tracking across events."
+    },
+    {
+      question: "How does data get into the system?",
+      answer: "Two ways: (1) CSV import from any lap timer app (RaceChrono, TrackAddict, AiM, etc.), or (2) Native iOS capture app that uploads directly. We're building one-click integrations with RaceChrono/TrackAddict next."
+    },
+    {
+      question: "What's the pricing model?",
+      answer: "Still figuring this out — that's why I need feedback from coaches. Considering coach seat licenses ($20-40/month) or school packages. What would make sense for your program?"
+    },
+    {
+      question: "When can I actually use this?",
+      answer: "It's a working demo now. Looking for 2-3 pilot programs in Q1 2026 to validate and refine before wider launch. If you're interested in testing, reach out."
+    }
+  ];
+
+  const toggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle(index);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (index + 1) % faqs.length;
+      document.getElementById(`faq-button-${nextIndex}`)?.focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = (index - 1 + faqs.length) % faqs.length;
+      document.getElementById(`faq-button-${prevIndex}`)?.focus();
+    }
+  };
+
+  return (
+    <section className="relative border-t border-slate-900/80 bg-gradient-to-b from-slate-950 to-slate-950/95 px-4 py-16 sm:px-6 md:px-8 lg:px-12 lg:py-20">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold text-slate-50 mb-3">Common Questions</h2>
+          <p className="text-slate-400">Everything you need to know about Track App</p>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <div
+                key={index}
+                className="border border-slate-700 rounded-lg overflow-hidden bg-slate-950/40"
+              >
+                <button
+                  id={`faq-button-${index}`}
+                  onClick={() => toggle(index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-content-${index}`}
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-800/50 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:ring-inset"
+                >
+                  <span className="font-semibold text-lg text-slate-50 pr-4">
+                    {faq.question}
+                  </span>
+                  <svg
+                    className={`flex-shrink-0 w-5 h-5 text-orange-400 transition-transform duration-200 ease-out ${
+                      isOpen ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <div
+                  id={`faq-content-${index}`}
+                  className={`transition-all duration-200 ease-out ${
+                    isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  } overflow-hidden`}
+                >
+                  <div className="p-4 pt-0 text-slate-300 text-sm leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function Section({
   id,
@@ -212,6 +315,9 @@ export default function TrackAppHeroPage() {
             </a>
             <a href="#story" className="hover:text-slate-50">
               Story
+            </a>
+            <a href="#faq" className="hover:text-slate-50">
+              FAQ
             </a>
           </nav>
 
@@ -417,32 +523,6 @@ export default function TrackAppHeroPage() {
                 Review 10–15 drivers trackside on phone or tablet: pace trends, best laps, consistency, and notes—without spreadsheets.
               </p>
             </div>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="https://trackapp-portal.vercel.app/import"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-slate-50 px-6 py-2 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/30 hover:bg-white"
-            >
-              Try CSV Import ↗
-            </a>
-            <a
-              href="https://trackapp-portal.vercel.app/import#templates"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-6 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
-            >
-              View CSV templates ↗
-            </a>
-          </div>
-
-          <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-800/60 bg-slate-950/30 p-5 text-sm text-slate-300">
-            <p className="font-semibold text-slate-50">Quick clarity:</p>
-            <p className="mt-2">
-              RaceChrono (and friends) capture laps. Track App is the coaching layer—multi-driver review, comparison, and repeatable feedback across weekends.
-            </p>
           </div>
         </Section>
 
@@ -679,6 +759,7 @@ export default function TrackAppHeroPage() {
 
         {/* Open to opportunities */}
         <Section
+	id="faq"
           eyebrow="Ready for Pilot Testing"
           title="Production-Deployed for HPDE Programs"
         >
@@ -737,6 +818,9 @@ export default function TrackAppHeroPage() {
             </div>
           </div>
         </Section>
+
+        {/* FAQ Section */}
+        <FAQ />
       </main>
 
       {/* Footer */}
