@@ -35,8 +35,8 @@ const featureCards = [
     image: featurePerf,
   },
   {
-    title: "Filtering + CSV Workflows",
-    body: "Global search and multi-select filters for track, driver, and session—plus CSV import templates and export for full-weekend, coach-level analysis.",
+    title: "Advanced Filtering & Export",
+    body: "Global search and multi-select filters for track, driver, date, and class. Sortable columns, sticky filters, and CSV export for full-weekend and program-level analysis.",
     image: featureFilters,
   },
 ];
@@ -56,8 +56,8 @@ const metrics = [
   {
     title: "Development Timeline",
     items: [
-      "Started: June 2025",
-      "v2.4 Shipped: Dec 2025",
+      "Started: May 2024",
+      "v2.4 Shipped: Dec 2024",
       "Production-deployed & stable",
     ],
   },
@@ -75,7 +75,7 @@ const metrics = [
     items: [
       "Mobile-first responsive design",
       "50x performance optimization",
-      "Advanced filtering + CSV workflows",
+      "Advanced filtering & export",
       "Production-grade engineering",
     ],
   },
@@ -113,9 +113,9 @@ const coreCapabilities = [
     image: coreFilter,
   },
   {
-    title: "CSV Import + Export",
+    title: "CSV Export",
     description:
-      "CSV-first workflow: export from RaceChrono/TrackAddict/AiM, upload to the coach portal, then export clean session views back out for spreadsheets and program-level analysis.",
+      "One-click export of session data—driver, track, laps, best lap, and consistency. Excel and Google Sheets ready for program-level analysis.",
     image: coreCsv,
   },
 ];
@@ -220,25 +220,23 @@ export default function TrackAppHeroPage() {
               href="https://trackapp-portal.vercel.app/coach/"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
+              className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-600/70 hover:text-white md:inline-flex"
             >
-              Coach dashboard ↗
+              Live demo
             </a>
             <a
-                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
+                href="https://trackapp-landing.vercel.app/session/"
+                target="_self"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-                Request pilot access
-              </a>
-            </div>
+              Beta Features
+            </a>
           </div>
         </div>
       </header>
 
       {/* HERO WITH BURST BACKGROUND */}
-      <main className="relative z-10">
-        <section className="relative overflow-hidden border-b border-slate-900/70">
-          {/* HERO WITH BURST BACKGROUND */}
       <main className="relative z-10">
         <section className="relative overflow-hidden border-b border-slate-900/70">
           {/* Burst background */}
@@ -267,42 +265,33 @@ export default function TrackAppHeroPage() {
 
             {/* Subhead */}
             <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-200 sm:text-base">
-              Track App turns raw lap data into coach-ready insights in under a second. Export CSV from RaceChrono / TrackAddict / AiM → upload to the coach portal → coach from one mobile-first dashboard.
+              Track App turns raw lap data into coach-ready insights in under a
+              second. Built on Next.js and Supabase, tuned for HPDE coaches
+              managing 12–15 drivers per weekend.
             </p>
 
             {/* Top CTAs */}
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <a
-                href="https://trackapp-portal.vercel.app/import"
+                href="https://trackapp-portal.vercel.app/coach"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-                Try CSV Import ↗
+                Test it live ↗
               </a>
               <a
-                href="https://trackapp-portal.vercel.app/coach"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-5 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
+                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
               >
-                Coach dashboard demo ↗
+                Request pilot access
               </a>
-            <ul className="mx-auto mt-4 flex max-w-3xl flex-col items-center justify-center gap-2 text-xs text-slate-200 sm:flex-row sm:gap-6">
-              <li className="inline-flex items-center gap-2">
-                <span className="text-amber-400">✓</span> No iOS app required (CSV-first)
-              </li>
-              <li className="inline-flex items-center gap-2">
-                <span className="text-amber-400">✓</span> Works with RaceChrono, TrackAddict, AiM
-              </li>
-              <li className="inline-flex items-center gap-2">
-                <span className="text-amber-400">✓</span> Upload + validate in ~15 seconds
-              </li>
-            </ul>
-{/* Hero demo card – whole thing is clickable */}
+            </div>
+
+            {/* Hero demo card – whole thing is clickable */}
 			<a
-			  href="https://trackapp-landing.vercel.app/session/"
-			  target="_self"
+			  href="https://trackapp-portal.vercel.app/coach"
+			  target="_blank"
 			  rel="noreferrer"
 			  className="group mt-10 block"
 			>
@@ -332,13 +321,13 @@ export default function TrackAppHeroPage() {
 					</div>
 				  </div>
 
-				  {/* FIXED: Centered "Open session demo" CTA - both horizontally AND vertically */}
+				  {/* FIXED: Centered "Test it live" CTA - both horizontally AND vertically */}
 				<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
 				  <button
 					type="button"
 					className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/12 bg-white-950/60 px-7 py-2.5 text-sm md:text-base font-semibold text-slate-50 shadow-[0_18px_45px_rgba(0,0,0,0.75)] backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-slate-950/80"
 				  >
-					Open session demo
+					Test it live
 					<span className="text-xs md:text-sm">↗</span>
 				  </button>
 				</div>
@@ -381,73 +370,13 @@ export default function TrackAppHeroPage() {
 			  Your existing timing apps
 			</p>
 			<p className="mt-1 text-sm text-slate-400">
-			  Works alongside tools like RaceChrono, RaceBox, and AiM. No iOS app required—export CSV, upload, and start coaching from one dashboard.
+			  Works alongside tools like RaceChrono, RaceBox, and AiM. No new
+			  hardware required—import CSVs and start coaching from one dashboard.
 			</p>
 		  </div>
 		</div>
           </div>
         </section>
-
-
-        <Section
-          id="data-in"
-          eyebrow="DATA IN"
-          title="CSV-First Import That Matches Real Weekend Workflows"
-          kicker="Track App doesn’t replace your lap timer. It sits above it—organizing sessions, drivers, and coaching notes in one dashboard."
-        >
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
-              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 1</p>
-              <h3 className="mt-2 text-base font-semibold text-slate-50">Export CSV</h3>
-              <p className="mt-2 text-sm text-slate-300">
-                Export session CSVs from RaceChrono, TrackAddict, AiM, SoloStorm (or any timing system).
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
-              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 2</p>
-              <h3 className="mt-2 text-base font-semibold text-slate-50">Upload & Validate</h3>
-              <p className="mt-2 text-sm text-slate-300">
-                Upload to the coach portal. Track App validates and maps the file so it lands cleanly in the right session view.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
-              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 3</p>
-              <h3 className="mt-2 text-base font-semibold text-slate-50">Coach From One Dashboard</h3>
-              <p className="mt-2 text-sm text-slate-300">
-                Review 10–15 drivers trackside on phone or tablet: pace trends, best laps, consistency, and notes—without spreadsheets.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="https://trackapp-portal.vercel.app/import"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-slate-50 px-6 py-2 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/30 hover:bg-white"
-            >
-              Try CSV Import ↗
-            </a>
-            <a
-              href="https://trackapp-portal.vercel.app/import#templates"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-6 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
-            >
-              View CSV templates ↗
-            </a>
-          </div>
-
-          <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-800/60 bg-slate-950/30 p-5 text-sm text-slate-300">
-            <p className="font-semibold text-slate-50">Quick clarity (the “Dave” question):</p>
-            <p className="mt-2">
-              RaceChrono (and friends) capture laps. Track App is the coaching layer—multi-driver review, comparison, and repeatable feedback across weekends.
-            </p>
-          </div>
-        </Section>
-
 
         {/* ====================================================================== */}
         {/* ALL SECTIONS FROM APP-PAGE.TSX BELOW */}
