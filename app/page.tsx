@@ -56,7 +56,7 @@ const metrics = [
   {
     title: "Development Timeline",
     items: [
-      "Started: May 2024",
+      "Started: June 2025",
       "v2.4 Shipped: Dec 2025",
       "Production-deployed & stable",
     ],
@@ -217,29 +217,20 @@ export default function TrackAppHeroPage() {
 
           <div className="flex items-center gap-2">
             <a
-              href="https://trackapp-portal.vercel.app/import"
+              href="https://trackapp-portal.vercel.app/coach/"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
             >
-              Try CSV Import ↗
-            </a>
-            <a
-              href="https://trackapp-portal.vercel.app/coach/"
-              target="_blank"
-              rel="noreferrer"
-              className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-600/70 hover:text-white md:inline-flex"
-            >
               Coach dashboard ↗
             </a>
             <a
-              href="https://trackapp-landing.vercel.app/session/"
-              target="_self"
-              rel="noreferrer"
-              className="hidden rounded-full border border-slate-700 bg-slate-950/40 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-slate-500 hover:text-white sm:inline-flex"
-            >
-              Session Review (Beta)
-            </a>
+                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
+              >
+                Request pilot access
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -248,7 +239,7 @@ export default function TrackAppHeroPage() {
       <main className="relative z-10">
         <section className="relative overflow-hidden border-b border-slate-900/70">
           {/* Burst background */}
-          <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="pointer-events-none fixed inset-0 -z-10">
             <Image
               src={heroBurst}
               alt=""
@@ -256,6 +247,8 @@ export default function TrackAppHeroPage() {
               priority
               className="object-cover opacity-90"
             />
+  <div className="absolute inset-0 bg-slate-950/40" />
+</div>
             {/* Darken edges so text stays readable */}
             <div className="absolute inset-0 bg-slate-950/40" />
           </div>
@@ -294,14 +287,6 @@ export default function TrackAppHeroPage() {
               >
                 Coach dashboard demo ↗
               </a>
-              <a
-                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
-              >
-                Request pilot access
-              </a>
-            </div>
-
             <ul className="mx-auto mt-4 flex max-w-3xl flex-col items-center justify-center gap-2 text-xs text-slate-200 sm:flex-row sm:gap-6">
               <li className="inline-flex items-center gap-2">
                 <span className="text-amber-400">✓</span> No iOS app required (CSV-first)
