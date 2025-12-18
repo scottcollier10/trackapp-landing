@@ -56,7 +56,7 @@ const metrics = [
   {
     title: "Development Timeline",
     items: [
-      "Started: July 2025",
+      "Started: Jul 2025",
       "v2.4 Shipped: Dec 2025",
       "Production-deployed & stable",
     ],
@@ -277,7 +277,8 @@ export default function TrackAppHeroPage() {
                 Coach dashboard demo ↗
               </a>
               <a
-                ref="https://trackapp-portal.vercel.app/coach"
+             <a
+                href="https://trackapp-portal.vercel.app/coach"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
