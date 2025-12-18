@@ -225,13 +225,11 @@ export default function TrackAppHeroPage() {
               Coach Dashboard
             </a>
             <a
-              href="https://trackapp-landing.vercel.app/session/"
-              target="_self"
-              rel="noreferrer"
-              className="hidden rounded-full border border-slate-700 bg-slate-950/40 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-slate-500 hover:text-white sm:inline-flex"
-            >
-              Session Review (Beta)
-            </a>
+                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
+              >
+                Request pilot access
+              </a>
           </div>
         </div>
       </header>
