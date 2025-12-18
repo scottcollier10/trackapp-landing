@@ -35,8 +35,8 @@ const featureCards = [
     image: featurePerf,
   },
   {
-    title: "Advanced Filtering & Export",
-    body: "Global search and multi-select filters for track, driver, date, and class. Sortable columns, sticky filters, and CSV export for full-weekend and program-level analysis.",
+    title: "Filtering + CSV Workflows",
+    body: "Global search and multi-select filters for track, driver, and session—plus CSV import templates and export for full-weekend, coach-level analysis.",
     image: featureFilters,
   },
 ];
@@ -56,8 +56,8 @@ const metrics = [
   {
     title: "Development Timeline",
     items: [
-      "Started: May 2024",
-      "v2.4 Shipped: Dec 2024",
+      "Started: June 2025",
+      "v2.4 Shipped: Dec 2025",
       "Production-deployed & stable",
     ],
   },
@@ -75,7 +75,7 @@ const metrics = [
     items: [
       "Mobile-first responsive design",
       "50x performance optimization",
-      "Advanced filtering & export",
+      "Advanced filtering + CSV workflows",
       "Production-grade engineering",
     ],
   },
@@ -113,9 +113,9 @@ const coreCapabilities = [
     image: coreFilter,
   },
   {
-    title: "CSV Export",
+    title: "CSV Import + Export",
     description:
-      "One-click export of session data—driver, track, laps, best lap, and consistency. Excel and Google Sheets ready for program-level analysis.",
+      "CSV-first workflow: export from RaceChrono/TrackAddict/AiM, upload to the coach portal, then export clean session views back out for spreadsheets and program-level analysis.",
     image: coreCsv,
   },
 ];
@@ -220,23 +220,25 @@ export default function TrackAppHeroPage() {
               href="https://trackapp-portal.vercel.app/coach/"
               target="_blank"
               rel="noreferrer"
-              className="hidden rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-blue-600/70 hover:text-white md:inline-flex"
+              className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
             >
-              Live demo
+              Coach dashboard ↗
             </a>
             <a
-                href="https://trackapp-landing.vercel.app/session/"
-                target="_self"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
+                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
               >
-              Beta Features
-            </a>
+                Request pilot access
+              </a>
+            </div>
           </div>
         </div>
       </header>
 
       {/* HERO WITH BURST BACKGROUND */}
+      <main className="relative z-10">
+        <section className="relative overflow-hidden border-b border-slate-900/70">
+          {/* HERO WITH BURST BACKGROUND */}
       <main className="relative z-10">
         <section className="relative overflow-hidden border-b border-slate-900/70">
           {/* Burst background */}
