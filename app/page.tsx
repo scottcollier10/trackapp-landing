@@ -238,8 +238,11 @@ export default function TrackAppHeroPage() {
       {/* HERO WITH BURST BACKGROUND */}
       <main className="relative z-10">
         <section className="relative overflow-hidden border-b border-slate-900/70">
+          {/* HERO WITH BURST BACKGROUND */}
+      <main className="relative z-10">
+        <section className="relative overflow-hidden border-b border-slate-900/70">
           {/* Burst background */}
-          <div className="pointer-events-none fixed inset-0 -z-10">
+          <div className="pointer-events-none absolute inset-0 -z-10">
             <Image
               src={heroBurst}
               alt=""
@@ -247,8 +250,6 @@ export default function TrackAppHeroPage() {
               priority
               className="object-cover opacity-90"
             />
-  <div className="absolute inset-0 bg-slate-950/40" />
-</div>
             {/* Darken edges so text stays readable */}
             <div className="absolute inset-0 bg-slate-950/40" />
           </div>
