@@ -56,7 +56,7 @@ const metrics = [
   {
     title: "Development Timeline",
     items: [
-      "Started: Jul 2025",
+      "Started: May 2024",
       "v2.4 Shipped: Dec 2025",
       "Production-deployed & stable",
     ],
@@ -225,11 +225,13 @@ export default function TrackAppHeroPage() {
               Coach Dashboard
             </a>
             <a
-                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
-              >
-                Request pilot access
-              </a>
+              href="https://trackapp-landing.vercel.app/session/"
+              target="_self"
+              rel="noreferrer"
+              className="hidden rounded-full border border-slate-700 bg-slate-950/40 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-slate-500 hover:text-white sm:inline-flex"
+            >
+              Session Review (Beta)
+            </a>
           </div>
         </div>
       </header>
@@ -274,16 +276,21 @@ export default function TrackAppHeroPage() {
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-                Coach dashboard demo ↗
+                Try CSV Import ↗
               </a>
               <a
-             <a
                 href="https://trackapp-portal.vercel.app/coach"
                 target="_blank"
                 rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-5 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
+              >
+                Coach dashboard demo ↗
+              </a>
+              <a
+                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
                 className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
               >
-                Try CSV Import ↗
+                Request pilot access
               </a>
             </div>
 
