@@ -64,6 +64,39 @@ function formatTime(t: number): string {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
+// Format timestamp as mm:ss (shorter format for tooltips)
+function formatTimestamp(seconds: number): string {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
+
+// Truncate text with ellipsis
+function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength - 3) + "...";
+}
+
+// Extract hashtags from text
+function extractTags(text: string): string[] {
+  const tagRegex = /#[\w-]+/g;
+  return text.match(tagRegex) || [];
+}
+
+// Get border color based on severity (matches pin colors)
+function getSeverityBorderColor(severity: Severity): string {
+  switch (severity) {
+    case "critical":
+      return "border-rose-400";
+    case "warn":
+      return "border-amber-300";
+    case "info":
+      return "border-sky-300";
+    default:
+      return "border-sky-300";
+  }
+}
+
 function loadStoredAnnotations(): Annotation[] {
   if (typeof window === "undefined") return [];
   try {
@@ -120,13 +153,16 @@ function TrackMap({
   annotations,
   activePos,
   onAddAtPos,
+  onClickAnnotation,
 }: {
   annotations: Annotation[];
   activePos: number | null;
   onAddAtPos: (pos: number) => void;
+  onClickAnnotation: (annotation: Annotation) => void;
 }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [trackPolyline, setTrackPolyline] = useState<Point[]>([]);
+  const [hoveredPin, setHoveredPin] = useState<string | null>(null);
 
   // Initialize polyline from GeoJSON on mount
   useEffect(() => {
@@ -169,13 +205,18 @@ function TrackMap({
     return geoPointForPos(pos, trackPolyline);
   };
 
+  const hoveredAnnotation = hoveredPin
+    ? annotations.find((a) => a.id === hoveredPin)
+    : null;
+
   return (
-    <svg
-      ref={svgRef}
-      viewBox="0 0 400 240"
-      className="w-full h-56 rounded-3xl border border-slate-900/80 bg-slate-950/70 shadow-[0_0_80px_rgba(16,185,255,0.15)] cursor-crosshair"
-      onClick={handleClick}
-    >
+    <div className="relative">
+      <svg
+        ref={svgRef}
+        viewBox="0 0 400 240"
+        className="w-full h-56 rounded-3xl border border-slate-900/80 bg-slate-950/70 shadow-[0_0_80px_rgba(16,185,255,0.15)] cursor-crosshair"
+        onClick={handleClick}
+      >
       {/* Outer glow */}
       <defs>
         <linearGradient id="trackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -236,13 +277,60 @@ function TrackMap({
         </g>
       )}
 
+      {/* Start/Finish Line Indicator */}
+      {trackPolyline.length > 0 && (() => {
+        const startPoint = pointForPos(0);
+        const nextPoint = pointForPos(0.005); // Small offset to get direction
+
+        // Calculate angle perpendicular to track direction
+        const dx = nextPoint.x - startPoint.x;
+        const dy = nextPoint.y - startPoint.y;
+        const trackAngle = Math.atan2(dy, dx);
+        const perpAngle = trackAngle + Math.PI / 2;
+
+        // Line extends 15px on each side of track centerline
+        const lineLength = 15;
+        const x1 = startPoint.x + Math.cos(perpAngle) * lineLength;
+        const y1 = startPoint.y + Math.sin(perpAngle) * lineLength;
+        const x2 = startPoint.x - Math.cos(perpAngle) * lineLength;
+        const y2 = startPoint.y - Math.sin(perpAngle) * lineLength;
+
+        return (
+          <g>
+            {/* Start/finish line */}
+            <line
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+              stroke="white"
+              strokeWidth={3}
+              strokeLinecap="round"
+            />
+            {/* Checkered pattern circles */}
+            <circle cx={x1} cy={y1} r={3} fill="white" />
+            <circle cx={x2} cy={y2} r={3} fill="white" />
+          </g>
+        );
+      })()}
+
       {/* Pins */}
       {annotations.map((a) => {
         const { x, y } = pointForPos(a.pos);
         const isActive =
           activePos !== null && Math.abs(a.pos - activePos) < 0.01;
         return (
-          <g key={a.id} transform={`translate(${x},${y})`}>
+          <g
+            key={a.id}
+            transform={`translate(${x},${y})`}
+            onMouseEnter={() => setHoveredPin(a.id)}
+            onMouseLeave={() => setHoveredPin(null)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickAnnotation(a);
+            }}
+            className="cursor-pointer"
+          >
             <circle
               r={8}
               className="fill-slate-950"
@@ -269,7 +357,81 @@ function TrackMap({
           </g>
         );
       })}
-    </svg>
+      </svg>
+
+      {/* Tooltip */}
+      {hoveredAnnotation && svgRef.current && (() => {
+        const { x, y } = pointForPos(hoveredAnnotation.pos);
+        const rect = svgRef.current.getBoundingClientRect();
+        const scaleX = rect.width / 400;
+        const scaleY = rect.height / 240;
+
+        // Convert SVG coordinates to pixel coordinates
+        const tooltipX = x * scaleX;
+        const tooltipY = y * scaleY;
+
+        // Flip tooltip below pin if near top edge
+        const isNearTop = tooltipY < 150;
+        const tags = extractTags(hoveredAnnotation.text);
+        const borderColor = getSeverityBorderColor(hoveredAnnotation.severity);
+
+        return (
+          <div
+            className="absolute pointer-events-none z-50 transition-opacity duration-150"
+            style={{
+              left: `${tooltipX}px`,
+              top: isNearTop ? `${tooltipY + 40}px` : `${tooltipY - 10}px`,
+              transform: isNearTop ? "translate(-50%, 0)" : "translate(-50%, -100%)",
+            }}
+          >
+            <div
+              className={`bg-gray-900/95 text-white rounded-lg px-3 py-2 shadow-lg max-w-[300px] border-l-4 ${borderColor}`}
+            >
+              <div className="flex items-center gap-2 text-sm font-medium mb-1">
+                <span className="capitalize">{hoveredAnnotation.type}</span>
+                <span className="text-gray-400">•</span>
+                <span className="text-gray-400">
+                  {formatTimestamp(hoveredAnnotation.t)}
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed">
+                {truncateText(hoveredAnnotation.text, 100)}
+              </p>
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-400">
+                  {tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+            {/* Pointer triangle */}
+            {!isNearTop && (
+              <div
+                className="absolute left-1/2 -translate-x-1/2 w-0 h-0"
+                style={{
+                  borderLeft: "6px solid transparent",
+                  borderRight: "6px solid transparent",
+                  borderTop: "6px solid rgba(17, 24, 39, 0.95)",
+                  bottom: "-6px",
+                }}
+              />
+            )}
+            {isNearTop && (
+              <div
+                className="absolute left-1/2 -translate-x-1/2 w-0 h-0"
+                style={{
+                  borderLeft: "6px solid transparent",
+                  borderRight: "6px solid transparent",
+                  borderBottom: "6px solid rgba(17, 24, 39, 0.95)",
+                  top: "-6px",
+                }}
+              />
+            )}
+          </div>
+        );
+      })()}
+    </div>
   );
 }
 
@@ -757,7 +919,13 @@ export default function SessionReviewPage() {
               annotations={annotations}
               activePos={activePos}
               onAddAtPos={handleTrackAddAtPos}
+              onClickAnnotation={handleClickNote}
             />
+            <p className="mt-3 text-xs text-slate-400 italic">
+              Note: Annotations are currently positioned by video timeline (not GPS-accurate).
+              The white start/finish line indicates lap position 0%.
+              Hover over any pin to preview details, or click to seek video.
+            </p>
           </div>
           <div className="rounded-3xl border border-slate-800/80 bg-slate-950/80 p-4 text-xs text-slate-300 shadow-[0_0_60px_rgba(15,23,42,0.8)]">
             <p className="text-[0.65rem] uppercase tracking-[0.3em] text-slate-500">

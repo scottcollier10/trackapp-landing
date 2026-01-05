@@ -22,6 +22,13 @@ import {
   compositeData,
 } from "@/lib/mockTelemetryData";
 import heroBurst from "@/public/images/hero-burst.webp";
+import {
+  buildPolylineFromGeoJSON,
+  pointForPos as geoPointForPos,
+  nearestPointOnPolyline,
+  type Point,
+} from "@/lib/geo-utils";
+import cotaGeoJSON from "@/public/tracks/cota.json";
 
 type Severity = "info" | "warn" | "critical";
 
@@ -119,38 +126,47 @@ function TrackMap({
   onAddAtPos: (pos: number) => void;
 }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const [trackPolyline, setTrackPolyline] = useState<Point[]>([]);
+
+  // Initialize polyline from GeoJSON on mount
+  useEffect(() => {
+    try {
+      const polyline = buildPolylineFromGeoJSON(cotaGeoJSON);
+      setTrackPolyline(polyline);
+    } catch (error) {
+      console.error("Failed to build track polyline:", error);
+    }
+  }, []);
 
   const handleClick = (e: MouseEvent<SVGSVGElement>) => {
     const svg = svgRef.current;
-    if (!svg) return;
+    if (!svg || trackPolyline.length === 0) return;
     const rect = svg.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
 
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
-    const rx = rect.width * 0.32;
-    const ry = rect.height * 0.38;
+    // Convert client coordinates to SVG coordinates
+    const scaleX = 400 / rect.width;
+    const scaleY = 240 / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
 
-    // Convert (x,y) to angle around center
-    const dx = x - cx;
-    const dy = y - cy;
-    let theta = Math.atan2(dy / ry, dx / rx); // -π..π
-    if (theta < 0) theta += Math.PI * 2;
-    const pos = theta / (Math.PI * 2); // 0..1
+    const { pos } = nearestPointOnPolyline({ x, y }, trackPolyline);
     onAddAtPos(pos);
   };
 
   // Helper: map 0–1 pos back to (x,y) for pins
-  const pointForPos = (pos: number) => {
-    const cx = 200;
-    const cy = 120;
-    const rx = 110;
-    const ry = 70;
-    const theta = pos * Math.PI * 2;
-    const x = cx + rx * Math.cos(theta);
-    const y = cy + ry * Math.sin(theta);
-    return { x, y };
+  const pointForPos = (pos: number): Point => {
+    if (trackPolyline.length === 0) {
+      // Fallback to oval if polyline not loaded
+      const cx = 200;
+      const cy = 120;
+      const rx = 110;
+      const ry = 70;
+      const theta = pos * Math.PI * 2;
+      const x = cx + rx * Math.cos(theta);
+      const y = cy + ry * Math.sin(theta);
+      return { x, y };
+    }
+    return geoPointForPos(pos, trackPolyline);
   };
 
   return (
@@ -178,23 +194,47 @@ function TrackMap({
         className="fill-slate-950"
       />
 
-      {/* Track outline (oval) */}
-      <g transform="translate(200 120)">
-        <ellipse
-          rx="120"
-          ry="78"
-          fill="none"
-          stroke="rgba(15,23,42,0.9)"
-          strokeWidth={22}
-        />
-        <ellipse
-          rx="110"
-          ry="68"
-          fill="none"
-          stroke="url(#trackGradient)"
-          strokeWidth={6}
-        />
-      </g>
+      {/* Track outline (COTA circuit) */}
+      {trackPolyline.length > 0 ? (
+        <>
+          {/* Dark background stroke */}
+          <path
+            d={`M ${trackPolyline.map((p) => `${p.x},${p.y}`).join(" L ")} Z`}
+            fill="none"
+            stroke="rgba(15,23,42,0.9)"
+            strokeWidth={22}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {/* Gradient top stroke */}
+          <path
+            d={`M ${trackPolyline.map((p) => `${p.x},${p.y}`).join(" L ")} Z`}
+            fill="none"
+            stroke="url(#trackGradient)"
+            strokeWidth={6}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </>
+      ) : (
+        /* Fallback to oval if GeoJSON not loaded */
+        <g transform="translate(200 120)">
+          <ellipse
+            rx="120"
+            ry="78"
+            fill="none"
+            stroke="rgba(15,23,42,0.9)"
+            strokeWidth={22}
+          />
+          <ellipse
+            rx="110"
+            ry="68"
+            fill="none"
+            stroke="url(#trackGradient)"
+            strokeWidth={6}
+          />
+        </g>
+      )}
 
       {/* Pins */}
       {annotations.map((a) => {
