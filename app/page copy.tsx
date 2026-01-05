@@ -35,8 +35,8 @@ const featureCards = [
     image: featurePerf,
   },
   {
-    title: "Advanced Filtering & Export",
-    body: "Global search and multi-select filters for track, driver, date, and class. Sortable columns, sticky filters, and CSV export for full-weekend and program-level analysis.",
+    title: "Filtering + CSV Workflows",
+    body: "Global search and multi-select filters for track, driver, and session—plus CSV import templates and export for full-weekend, coach-level analysis.",
     image: featureFilters,
   },
 ];
@@ -56,8 +56,8 @@ const metrics = [
   {
     title: "Development Timeline",
     items: [
-      "Started: May 2024",
-      "v2.4 Shipped: Dec 2024",
+      "Started: Jul 2025",
+      "v2.4 Shipped: Dec 2025",
       "Production-deployed & stable",
     ],
   },
@@ -75,7 +75,7 @@ const metrics = [
     items: [
       "Mobile-first responsive design",
       "50x performance optimization",
-      "Advanced filtering & export",
+      "Advanced filtering + CSV workflows",
       "Production-grade engineering",
     ],
   },
@@ -113,9 +113,9 @@ const coreCapabilities = [
     image: coreFilter,
   },
   {
-    title: "CSV Export",
+    title: "CSV Import + Export",
     description:
-      "One-click export of session data—driver, track, laps, best lap, and consistency. Excel and Google Sheets ready for program-level analysis.",
+      "CSV-first workflow: export from RaceChrono/TrackAddict/AiM, upload to the coach portal, then export clean session views back out for spreadsheets and program-level analysis.",
     image: coreCsv,
   },
 ];
@@ -125,6 +125,109 @@ const coreCapabilities = [
 // HELPER COMPONENTS
 // ============================================================================
 
+// FAQ Accordion Component
+function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: "Is this another lap timer app?",
+      answer: "Not exactly — Track App has an iOS capture app, but we're not trying to replace RaceChrono or TrackAddict. The real value is the coaching layer. If your drivers already use RaceChrono, they can keep using it and import that data. If they don't have a timer yet, our iOS app integrates directly with the coach dashboard. Either way, the focus is on coach workflows, not competing on telemetry features."
+    },
+    {
+      question: "What does it actually do that RaceChrono doesn't?",
+      answer: "RaceChrono is built for individual drivers. Track App is built for coaches managing 10-15 drivers per weekend. Multi-driver dashboard, persistent coaching notes, and longitudinal progress tracking across events."
+    },
+    {
+      question: "How does data get into the system?",
+      answer: "Two ways: (1) CSV import from any lap timer app (RaceChrono, TrackAddict, AiM, etc.), or (2) Native iOS capture app that uploads directly. We're building one-click integrations with RaceChrono/TrackAddict next."
+    },
+    {
+      question: "What's the pricing model?",
+      answer: "Still figuring this out — that's why I need feedback from coaches. Considering coach seat licenses ($20-40/month) or school packages. What would make sense for your program?"
+    },
+    {
+      question: "When can I actually use this?",
+      answer: "It's a working demo now. Looking for 2-3 pilot programs in Q1 2026 to validate and refine before wider launch. If you're interested in testing, reach out."
+    }
+  ];
+
+  const toggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle(index);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (index + 1) % faqs.length;
+      document.getElementById(`faq-button-${nextIndex}`)?.focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = (index - 1 + faqs.length) % faqs.length;
+      document.getElementById(`faq-button-${prevIndex}`)?.focus();
+    }
+  };
+
+  return (
+    <section className="relative border-t border-slate-900/80 bg-gradient-to-b from-slate-950 to-slate-950/95 px-4 py-16 sm:px-6 md:px-8 lg:px-12 lg:py-20">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold text-slate-50 mb-3">Common Questions</h2>
+          <p className="text-slate-400">Everything you need to know about Track App</p>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <div
+                key={index}
+                className="border border-slate-700 rounded-lg overflow-hidden bg-slate-950/40"
+              >
+                <button
+                  id={`faq-button-${index}`}
+                  onClick={() => toggle(index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-content-${index}`}
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-800/50 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:ring-inset"
+                >
+                  <span className="font-semibold text-lg text-slate-50 pr-4">
+                    {faq.question}
+                  </span>
+                  <svg
+                    className={`flex-shrink-0 w-5 h-5 text-orange-400 transition-transform duration-200 ease-out ${
+                      isOpen ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <div
+                  id={`faq-content-${index}`}
+                  className={`transition-all duration-200 ease-out ${
+                    isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  } overflow-hidden`}
+                >
+                  <div className="p-4 pt-0 text-slate-300 text-sm leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function Section({
   id,
@@ -198,6 +301,9 @@ export default function TrackAppHeroPage() {
           </div>
 
           <nav className="hidden items-center gap-6 text-xs font-medium text-slate-300 md:flex">
+	  <a href="/" className="hover:text-slate-50">
+            Home
+          </a>
             <a href="#features" className="hover:text-slate-50">
               Features
             </a>
@@ -210,17 +316,26 @@ export default function TrackAppHeroPage() {
             <a href="#story" className="hover:text-slate-50">
               Story
             </a>
+            <a href="#faq" className="hover:text-slate-50">
+              FAQ
+            </a>
           </nav>
 
           <div className="flex items-center gap-2">
             <a
-                href="https://trackapp-portal.vercel.app"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
-              >
-              Live demo
+              href="https://trackapp-portal.vercel.app/coach"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
+            >
+              Live Demo
             </a>
+            <a
+                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
+              >
+                Request pilot access
+              </a>
           </div>
         </div>
       </header>
@@ -254,33 +369,44 @@ export default function TrackAppHeroPage() {
 
             {/* Subhead */}
             <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-200 sm:text-base">
-              Track App turns raw lap data into coach-ready insights in under a
-              second. Built on Next.js and Supabase, tuned for HPDE coaches
-              managing 12–15 drivers per weekend.
+              Track App turns lap data into coach-ready insights in under a second. Export CSV from RaceChrono / TrackAddict / AiM → upload to the portal → coach from one mobile dashboard.
             </p>
 
             {/* Top CTAs */}
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <a
-                href="https://trackapp-portal.vercel.app"
+                href="https://trackapp-portal.vercel.app/coach"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-slate-50 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-lg shadow-slate-900/40 hover:bg-white"
               >
-                Test it live ↗
+                View Dashboard ↗
               </a>
               <a
-                href="mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-slate-950/40 px-4 py-2 text-xs font-medium text-slate-50 hover:border-orange-400/80 hover:text-orange-100"
+                href="https://trackapp-portal.vercel.app/import"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-5 py-2.5 text-sm font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
               >
-                Request pilot access
+                 Try CSV Import ↗
               </a>
             </div>
-
-            {/* Hero demo card – whole thing is clickable */}
+	  	
+            <ul className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-2 text-xs text-slate-200 sm:flex-row sm:gap-6">
+              <li className="inline-flex items-center gap-2">
+                <span className="text-amber-400">✓</span> No iOS app required (CSV-first)
+              </li>
+              <li className="inline-flex items-center gap-2">
+                <span className="text-amber-400">✓</span> Works with RaceChrono, TrackAddict, AiM
+              </li>
+              <li className="inline-flex items-center gap-2">
+                <span className="text-amber-400">✓</span> Upload + validate in ~15 seconds
+              </li>
+            </ul>
+{/* Hero demo card – whole thing is clickable */}
 			<a
-			  href="https://trackapp-portal.vercel.app"
-			  target="_blank"
+			  href="https://trackapp-landing.vercel.app/session/"
+			  target="_self"
 			  rel="noreferrer"
 			  className="group mt-10 block"
 			>
@@ -310,13 +436,13 @@ export default function TrackAppHeroPage() {
 					</div>
 				  </div>
 
-				  {/* Bottom “Test it live” CTA */}
-				<div className="pointer-events-none absolute inset-x-0 bottom-9 flex justify-center">
+				  {/* FIXED: Centered "Open session demo" CTA - both horizontally AND vertically */}
+				<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
 				  <button
 					type="button"
-					className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/12 bg-slate-950/60 px-7 py-3.5 text-sm md:text-base font-semibold text-slate-50 shadow-[0_18px_45px_rgba(0,0,0,0.75)] backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-slate-950/80"
+					className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/12 bg-white-950/60 px-7 py-2.5 text-sm md:text-base font-semibold text-slate-50 shadow-[0_18px_45px_rgba(0,0,0,0.75)] backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-slate-950/80"
 				  >
-					Test it live
+					Open session demo
 					<span className="text-xs md:text-sm">↗</span>
 				  </button>
 				</div>
@@ -339,20 +465,18 @@ export default function TrackAppHeroPage() {
 			  One place for pace trends, best laps, and coaching notes.
 			</p>
 		  </div>
-
 		  <div>
 			<p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
 			  BUILT FOR
 			</p>
 			<p className="mt-2 text-sm font-semibold text-slate-50">
-			  HPDE &amp; track-day programs
+			  HPDE & track-day programs
 			</p>
 			<p className="mt-1 text-sm text-slate-400">
 			  Designed around HPDE weekends, private coaching days, and multi-driver
-			  programs—not pro telemetry teams or data engineers.
+			  programs—not pie-in-the-sky telemetry or teams with data engineers.
 			</p>
 		  </div>
-
 		  <div>
 			<p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
 			  PLAYS NICE WITH
@@ -361,13 +485,47 @@ export default function TrackAppHeroPage() {
 			  Your existing timing apps
 			</p>
 			<p className="mt-1 text-sm text-slate-400">
-			  Works alongside tools like RaceChrono, RaceBox, and AiM. No new hardware
-			  required—import CSVs and start coaching from one dashboard.
+			  Works alongside tools like RaceChrono, RaceBox, and AiM. No iOS app required—export CSV, upload, and start coaching from one dashboard.
 			</p>
 		  </div>
 		</div>
           </div>
         </section>
+
+
+        <Section
+          id="data-in"
+          eyebrow="DATA IN"
+          title="CSV-First Import That Matches Real Weekend Workflows"
+          kicker="Track App doesn’t replace your lap timer. It sits above it—organizing sessions, drivers, and coaching notes in one dashboard."
+        >
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
+              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 1</p>
+              <h3 className="mt-2 text-base font-semibold text-slate-50">Export CSV</h3>
+              <p className="mt-2 text-sm text-slate-300">
+                Export session CSVs from RaceChrono, TrackAddict, AiM, SoloStorm (or any timing system).
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
+              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 2</p>
+              <h3 className="mt-2 text-base font-semibold text-slate-50">Upload & Validate</h3>
+              <p className="mt-2 text-sm text-slate-300">
+                Upload to the coach portal. Track App validates and maps the file so it lands cleanly in the right session view.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
+              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 3</p>
+              <h3 className="mt-2 text-base font-semibold text-slate-50">Coach From One Dashboard</h3>
+              <p className="mt-2 text-sm text-slate-300">
+                Review 10–15 drivers trackside on phone or tablet: pace trends, best laps, consistency, and notes—without spreadsheets.
+              </p>
+            </div>
+          </div>
+        </Section>
+
 
         {/* ====================================================================== */}
         {/* ALL SECTIONS FROM APP-PAGE.TSX BELOW */}
@@ -376,9 +534,9 @@ export default function TrackAppHeroPage() {
         {/* What it does */}
         <Section
           id="features"
-          eyebrow="READY FOR REAL HPDE WEEKENDS"
-          title="Built for real trackside coaching"
-          kicker="Track App turns raw lap data into coach-ready decisions in seconds. Review up to 12 drivers on your phone between sessions, spot trends faster, and carry a persistent history from event to event—without living in spreadsheets."
+          eyebrow="NEW in v2.4"
+          title="Production-Ready for Trackside Coaching"
+          kicker="Not just an MVP anymore—this is production-deployed coaching infrastructure. Mobile-first design means coaches review 12 drivers on iPhone in the paddock in under 2 minutes. No laptop required."
         >
           <div className="grid gap-8 md:grid-cols-3">
             {featureCards.map((card) => (
@@ -601,6 +759,7 @@ export default function TrackAppHeroPage() {
 
         {/* Open to opportunities */}
         <Section
+	id="faq"
           eyebrow="Ready for Pilot Testing"
           title="Production-Deployed for HPDE Programs"
         >
@@ -640,7 +799,7 @@ export default function TrackAppHeroPage() {
                   Email: me@scott-collier.com
                 </a>
                 <a
-                  href="https://trackapp-portal.vercel.app"
+                  href="https://trackapp-portal.vercel.app/coach"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex flex-1 items-center justify-center rounded-full border border-slate-700 bg-slate-900 px-4 py-2 text-xs font-medium text-slate-200 hover:border-blue-600/60 hover:text-white"
@@ -659,6 +818,9 @@ export default function TrackAppHeroPage() {
             </div>
           </div>
         </Section>
+
+        {/* FAQ Section */}
+        <FAQ />
       </main>
 
       {/* Footer */}
@@ -667,7 +829,7 @@ export default function TrackAppHeroPage() {
           <p>Production-Ready, Mobile-First Coach OS • Track App v2.4</p>
           <div className="flex flex-wrap items-center gap-3">
             <a
-              href="https://trackapp-portal.vercel.app"
+              href="https://trackapp-portal.vercel.app/coach"
               target="_blank"
               rel="noreferrer"
               className="hover:text-slate-300"
