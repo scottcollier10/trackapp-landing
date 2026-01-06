@@ -2,19 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
+
 import trackLogo from "@/public/images/trackapp-logo.png";
 import heroBurst from "@/public/images/hero-burst.webp";
 import heroCoach from "@/public/images/trackapp-hero-coach-tablet.webp";
-import heroCoachCu from "@/public/images/trackapp-hero-coach-tablet-cu.webp";
-import featureMobile from "@/public/images/feature-mobile-dashboard.webp";
-import featurePerf from "@/public/images/feature-50x-performance.webp";
-import featureFilters from "@/public/images/feature-advanced-filters.webp";
-import mobileDashboard from "@/public/images/mobile-dashboard-card.webp";
+
 import coreMulti from "@/public/images/core-multidevice.webp";
-import coreSession from "@/public/images/core-session-analysis.webp";
-import coreCompare from "@/public/images/core-driver-compare.webp";
 import coreProgress from "@/public/images/core-longitudinal-progress.webp";
-import coreFilter from "@/public/images/core-advanced-filtering.webp";
+import coreSession from "@/public/images/core-session-analysis.webp";
 import coreCsv from "@/public/images/core-csv-export.webp";
 
 // ============================================================================
@@ -28,128 +23,107 @@ const PILOT_MAILTO =
   "mailto:me@scott-collier.com?subject=Track%20App%20Pilot%20Access";
 
 // ============================================================================
-// DATA ARRAYS
+// CONTENT
 // ============================================================================
 
-const featureCards = [
+const programCards = [
   {
-    title: "Mobile-First Dashboard",
-    body: "Designed for phone first—not a desktop UI crushed onto a small screen. Card layouts on mobile, tables on desktop, so coaches can review 12 drivers in under 2 minutes between sessions.",
-    image: featureMobile,
-  },
-  {
-    title: "50x Performance Optimization",
-    body: "Rebuilt the data layer to remove N+1 queries—50+ calls collapsed into a single optimized query. Sub-100ms page loads in production with headroom for 1,000+ sessions.",
-    image: featurePerf,
-  },
-  {
-    title: "Filtering + CSV Workflows",
-    body: "Global search and multi-select filters for track, driver, and session—plus CSV import templates and export for full-weekend, coach-level analysis.",
-    image: featureFilters,
-  },
-];
-
-const techStack = [
-  "Next.js 14",
-  "Supabase",
-  "PostgreSQL",
-  "Swift/SwiftUI",
-  "Vercel Edge",
-  "TypeScript",
-  "XCTest + Vitest",
-  "Tailwind CSS",
-];
-
-const metrics = [
-  {
-    title: "Development Timeline",
-    items: ["Started: Jul 2025", "v2.4 Shipped: Dec 2025", "Production-deployed & stable"],
-  },
-  {
-    title: "What's Built",
-    items: ["160+ files (95 TS, 52 Swift)", "14,000+ lines of code", "54 unit tests (iOS + web)", "Live at trackapp-portal.vercel.app"],
-  },
-  {
-    title: "v2.4 Highlights",
-    items: ["Mobile-first responsive design", "50x performance optimization", "Advanced filtering + CSV workflows", "Production-grade engineering"],
-  },
-];
-
-const coreCapabilities = [
-  {
-    title: "Multi-Driver Overview",
+    title: "Roster View (Lead Instructor Mode)",
     description:
-      "Monitor 12–15 drivers at once on phone or tablet. Card-based layouts keep key metrics readable and thumb-reachable in the paddock.",
+      "A program-level roster you can scan fast: best laps, trends, consistency, and quick flags. Built for oversight across 10 to 15 drivers, not single-driver deep dives.",
     image: coreMulti,
   },
   {
-    title: "Session Analysis",
+    title: "Returning Driver History",
     description:
-      "Lap-by-lap progression with consistency scores, pace trends, and session patterns. Spot where a driver settles in or starts to fade at a glance.",
-    image: coreSession,
-  },
-  {
-    title: "Driver Comparison",
-    description:
-      "Head-to-head lap analysis with time deltas, sector gains, and best-lap overlays. See exactly where one driver is faster and why.",
-    image: coreCompare,
-  },
-  {
-    title: "Longitudinal Progress",
-    description:
-      "Track a single driver across multiple events. Compare weekends, highlight gains, and back up coaching feedback with real data.",
+      "Keep continuity across weekends. See progress over time, track what was coached last event, and avoid starting from zero when instructors rotate.",
     image: coreProgress,
   },
   {
-    title: "Advanced Filtering",
+    title: "Session Snapshot",
     description:
-      "Global search plus multi-select filters for track, driver, date, and car. Sortable columns and sticky filters so views stay put between sessions.",
-    image: coreFilter,
+      "A quick read on what changed in a session, where the driver settled, and what needs attention next session. Useful between runs when time is limited.",
+    image: coreSession,
   },
   {
     title: "CSV Import + Export",
     description:
-      "CSV-first workflow: export from RaceChrono/TrackAddict/AiM, upload to the coach portal, then export clean session views back out for spreadsheets and program-level analysis.",
+      "Drivers keep using RaceChrono, TrackAddict, AiM, SoloStorm, or any timing system. Track App organizes it into a comprehensive coaching workflow and exports clean views for debriefs.",
     image: coreCsv,
   },
 ];
 
-// ============================================================================
-// HELPER COMPONENTS
-// ============================================================================
+function Section({
+  id,
+  eyebrow,
+  title,
+  kicker,
+  children,
+}: {
+  id?: string;
+  eyebrow?: string;
+  title: string;
+  kicker?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      id={id}
+      className="relative border-t border-slate-900/80 bg-gradient-to-b from-slate-950 to-slate-950/95 px-4 py-16 sm:px-6 md:px-8 lg:px-12 lg:py-20"
+    >
+      <div className="mx-auto max-w-6xl">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          {eyebrow && (
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-orange-400/80">
+              {eyebrow}
+            </p>
+          )}
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-50 md:text-3xl">
+            {title}
+          </h2>
+          {kicker && (
+            <p className="mt-3 text-sm text-slate-400 md:text-base">{kicker}</p>
+          )}
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
 
 function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
     {
-      question: "Is this another lap timer app?",
+      question: "Is Track App another lap timer app?",
       answer:
-        "Not exactly — Track App has an iOS capture app, but we're not trying to replace RaceChrono or TrackAddict. The real value is the coaching layer. If your drivers already use RaceChrono, they can keep using it and import that data. Either way, the focus is on coach workflows, not competing on telemetry features.",
+        "No. Track App does not replace lap timers. It sits above them and turns exports into a program-level coaching workflow, including roster view, driver history, notes, and progress tracking.",
     },
     {
-      question: "What does it actually do that RaceChrono doesn't?",
+      question: "What does it do that RaceChrono or TrackAddict does not?",
       answer:
-        "RaceChrono is built for individual drivers. Track App is built for coaches managing 10-15 drivers per weekend. Multi-driver dashboard, persistent coaching notes, and longitudinal progress tracking across events.",
+        "Timing apps are great at capturing laps. Track App is built for coaching continuity and program oversight, helping a lead instructor review multiple drivers quickly, keep notes consistent, and track improvement across weekends.",
     },
     {
       question: "How does data get into the system?",
       answer:
-        "Two ways: (1) CSV import from any lap timer app (RaceChrono, TrackAddict, AiM, etc.), or (2) Native iOS capture app that uploads directly. Integrations may come later—but CSV works now.",
+        "CSV-first. Export session data from the timing system drivers already use, upload to the portal, and Track App validates and maps it into the correct driver and session context.",
     },
     {
-      question: "What's the pricing model?",
+      question: "Does everyone need to adopt it at once?",
       answer:
-        "Still figuring this out — that's why I need feedback from coaches. Considering coach seat licenses ($20-40/month) or school packages. What would make sense for your program?",
+        "No. A pilot can start with a subset of drivers who already export CSVs. The roster view and history still create value, and adoption can expand over time.",
     },
     {
-      question: "When can I actually use this?",
+      question: "What would a pilot look like?",
       answer:
-        "It's a working demo now. Looking for 2-3 pilot programs in Q1 2026 to validate and refine before wider launch. If you're interested in testing, reach out.",
+        "One event, small scope. Start with 10 to 20 drivers, import CSVs, use the roster and history during and after sessions, and export summary views for debrief and follow-up.",
     },
   ];
 
-  const toggle = (index: number) => setOpenIndex(openIndex === index ? null : index);
+  const toggle = (index: number) =>
+    setOpenIndex(openIndex === index ? null : index);
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -173,15 +147,20 @@ function FAQ() {
     >
       <div className="mx-auto max-w-4xl">
         <div className="mb-12 text-center">
-          <h2 className="mb-3 text-3xl font-bold text-slate-50">Common Questions</h2>
-          <p className="text-slate-400">Everything you need to know about Track App</p>
+          <h2 className="mb-3 text-3xl font-bold text-slate-50">
+            Common Questions
+          </h2>
+          <p className="text-slate-400">How this fits HPDE weekend reality</p>
         </div>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
-              <div key={index} className="overflow-hidden rounded-lg border border-slate-700 bg-slate-950/40">
+              <div
+                key={index}
+                className="overflow-hidden rounded-lg border border-slate-700 bg-slate-950/40"
+              >
                 <button
                   id={`faq-button-${index}`}
                   onClick={() => toggle(index)}
@@ -190,7 +169,9 @@ function FAQ() {
                   aria-controls={`faq-content-${index}`}
                   className="flex w-full items-center justify-between p-4 text-left transition-colors duration-150 hover:bg-slate-800/50 focus:outline-none focus:ring-2 focus:ring-orange-400/50 focus:ring-inset"
                 >
-                  <span className="pr-4 text-lg font-semibold text-slate-50">{faq.question}</span>
+                  <span className="pr-4 text-lg font-semibold text-slate-50">
+                    {faq.question}
+                  </span>
                   <svg
                     className={`h-5 w-5 flex-shrink-0 text-orange-400 transition-transform duration-200 ease-out ${
                       isOpen ? "rotate-180" : ""
@@ -199,7 +180,12 @@ function FAQ() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
 
@@ -209,7 +195,9 @@ function FAQ() {
                     isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  <div className="p-4 pt-0 text-sm leading-relaxed text-slate-300">{faq.answer}</div>
+                  <div className="p-4 pt-0 text-sm leading-relaxed text-slate-300">
+                    {faq.answer}
+                  </div>
                 </div>
               </div>
             );
@@ -220,40 +208,8 @@ function FAQ() {
   );
 }
 
-function Section({
-  id,
-  eyebrow,
-  title,
-  kicker,
-  children,
-}: {
-  id?: string;
-  eyebrow?: string;
-  title: string;
-  kicker?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section
-      id={id}
-      className="relative border-t border-slate-900/80 bg-gradient-to-b from-slate-950 to-slate-950/95 px-4 py-16 sm:px-6 md:px-8 lg:px-12 lg:py-20"
-    >
-      <div className="mx-auto max-w-6xl">
-        <div className="mx-auto mb-10 max-w-3xl text-center">
-          {eyebrow && (
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-orange-400/80">{eyebrow}</p>
-          )}
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-50 md:text-3xl">{title}</h2>
-          {kicker && <p className="mt-3 text-sm text-slate-400 md:text-base">{kicker}</p>}
-        </div>
-        {children}
-      </div>
-    </section>
-  );
-}
-
 // ============================================================================
-// MAIN COMPONENT
+// MAIN
 // ============================================================================
 
 export default function TrackAppHeroPage() {
@@ -264,25 +220,42 @@ export default function TrackAppHeroPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 md:px-8">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center">
-              <Image src={trackLogo} alt="Track App logo" width={32} height={32} className="h-8 w-8 object-contain" />
+              <Image
+                src={trackLogo}
+                alt="Track App logo"
+                width={32}
+                height={32}
+                className="h-8 w-8 object-contain"
+              />
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Track App</span>
-              <span className="text-[11px] text-slate-500">Racing Analytics &amp; Coaching Platform</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+                Track App
+              </span>
+              <span className="text-[11px] text-slate-500">
+                Program-level coaching workflow
+              </span>
             </div>
           </div>
 
           <nav className="hidden items-center gap-6 text-xs font-medium text-slate-300 md:flex">
-            <a href="/" className="hover:text-slate-50">Home</a>
-            <a href="#features" className="hover:text-slate-50">Features</a>
-            <a href="#stack" className="hover:text-slate-50">Tech Stack</a>
-            <a href="#numbers" className="hover:text-slate-50">Performance</a>
-            <a href="#story" className="hover:text-slate-50">Story</a>
-            <a href="#pilot" className="hover:text-slate-50">Pilot</a>
-            <a href="#faq" className="hover:text-slate-50">FAQ</a>
+            <a href="#workflow" className="hover:text-slate-50">
+              Workflow
+            </a>
+            <a href="#program" className="hover:text-slate-50">
+              Program View
+            </a>
+            <a href="#credibility" className="hover:text-slate-50">
+              Credibility
+            </a>
+            <a href="#pilot" className="hover:text-slate-50">
+              Pilot
+            </a>
+            <a href="#faq" className="hover:text-slate-50">
+              FAQ
+            </a>
           </nav>
 
-          {/* Only 2 CTAs in header: Live Demo + Pilot */}
           <div className="flex items-center gap-2">
             <a
               href={COACH_DEMO_URL}
@@ -307,21 +280,26 @@ export default function TrackAppHeroPage() {
         <section className="relative overflow-hidden border-b border-slate-900/70">
           <div className="pointer-events-none absolute inset-0 -z-10">
             <Image src={heroBurst} alt="" fill priority className="object-cover opacity-90" />
-            <div className="absolute inset-0 bg-slate-950/40" />
+            <div className="absolute inset-0 bg-slate-950/45" />
           </div>
 
-          <div className="mx-auto max-w-6xl px-4 pb-20 pt-24 text-center sm:px-6 md:px-8 lg:pt-28">
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-orange-300/80">Portfolio • Track App</p>
-
-            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl lg:text-[2.75rem]">
-              The coaching OS for track-day programs
-            </h1>
-
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-200 sm:text-base">
-              Track App turns lap data into coach-ready insights in under a second. Export CSV from RaceChrono / TrackAddict / AiM → upload to the portal → coach from one mobile dashboard.
+          <div className="mx-auto max-w-6xl px-4 pb-16 pt-24 text-center sm:px-6 md:px-8 lg:pt-28">
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-orange-300/80">
+              HPDE programs • pilot-ready
             </p>
 
-            {/* HERO CTAs: keep it to 2 */}
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl lg:text-[2.75rem]">
+              The coaching workflow layer for HPDE weekends
+            </h1>
+
+            <p className="mx-auto mt-4 max-w-3xl text-sm text-slate-200 sm:text-base">
+              Track App turns lap-timer exports into a fast, mobile-first program roster view so a lead instructor can review 10 to 15 drivers in minutes, keep notes consistent across weekends, and prove improvement.
+            </p>
+
+            <p className="mx-auto mt-4 max-w-3xl text-sm text-slate-300 sm:text-base">
+              Drivers keep using RaceChrono, TrackAddict, AiM, SoloStorm, or any commercial timing system. Track App organizes it into a comprehensive coach workflow.
+            </p>
+
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <a
                 href={COACH_DEMO_URL}
@@ -340,12 +318,17 @@ export default function TrackAppHeroPage() {
             </div>
 
             <ul className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-2 text-xs text-slate-200 sm:flex-row sm:gap-6">
-              <li className="inline-flex items-center gap-2"><span className="text-amber-400">✓</span> No iOS app required (CSV-first)</li>
-              <li className="inline-flex items-center gap-2"><span className="text-amber-400">✓</span> Works with RaceChrono, TrackAddict, AiM</li>
-              <li className="inline-flex items-center gap-2"><span className="text-amber-400">✓</span> Upload + validate in ~15 seconds</li>
+              <li className="inline-flex items-center gap-2">
+                <span className="text-amber-400">✓</span> CSV-first, no new app mandate
+              </li>
+              <li className="inline-flex items-center gap-2">
+                <span className="text-amber-400">✓</span> Built for lead instructor visibility
+              </li>
+              <li className="inline-flex items-center gap-2">
+                <span className="text-amber-400">✓</span> Works with partial adoption
+              </li>
             </ul>
 
-            {/* HERO IMAGE: no longer a clickable Session Demo CTA */}
             <div className="mx-auto mt-10 w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-950/70 shadow-[0_24px_80px_rgba(15,23,42,0.9)] backdrop-blur">
               <div className="relative aspect-[16/9] w-full">
                 <Image
@@ -358,77 +341,66 @@ export default function TrackAppHeroPage() {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/0 to-slate-950/0" />
                 <div className="absolute inset-x-0 top-0 flex items-center justify-between px-6 pt-4 text-xs font-medium text-slate-200 md:px-8">
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[0.65rem] uppercase tracking-[0.16em] text-slate-400">Coach dashboard preview</span>
-                    <span className="text-[0.7rem] text-slate-200">Multi-driver view • coaching notes • progress</span>
+                    <span className="text-[0.65rem] uppercase tracking-[0.16em] text-slate-400">
+                      Program dashboard preview
+                    </span>
+                    <span className="text-[0.7rem] text-slate-200">
+                      Roster view, history, coaching continuity
+                    </span>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              <div>
-                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">WEEKEND IMPACT</p>
-                <p className="mt-2 text-sm font-semibold text-slate-50">Less admin, more coaching</p>
-                <p className="mt-1 text-sm text-slate-400">
-                  Review 10–15 drivers between sessions without juggling apps or spreadsheets. One place for pace trends, best laps, and coaching notes.
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">BUILT FOR</p>
-                <p className="mt-2 text-sm font-semibold text-slate-50">HPDE &amp; track-day programs</p>
-                <p className="mt-1 text-sm text-slate-400">
-                  Designed around HPDE weekends, private coaching days, and multi-driver programs—not pie-in-the-sky telemetry or teams with data engineers.
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">PLAYS NICE WITH</p>
-                <p className="mt-2 text-sm font-semibold text-slate-50">Your existing timing apps</p>
-                <p className="mt-1 text-sm text-slate-400">
-                  Works alongside tools like RaceChrono, RaceBox, and AiM. No iOS app required—export CSV, upload, and start coaching from one dashboard.
-                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* DATA IN */}
+        {/* WORKFLOW */}
         <Section
-          id="data-in"
-          eyebrow="DATA IN"
-          title="CSV-First Import That Matches Real Weekend Workflows"
-          kicker="Track App doesn’t replace your lap timer. It sits above it—organizing sessions, drivers, and coaching notes in one dashboard."
+          id="workflow"
+          eyebrow="WORKFLOW"
+          title="CSV-First Import That Matches Real HPDE Weekends"
+          kicker="No new capture system required. Start with what drivers already export, then run the weekend from a single program view."
         >
           <div className="grid gap-6 md:grid-cols-3">
             <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
-              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 1</p>
-              <h3 className="mt-2 text-base font-semibold text-slate-50">Export CSV</h3>
+              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
+                STEP 1
+              </p>
+              <h3 className="mt-2 text-base font-semibold text-slate-50">
+                Export CSV
+              </h3>
               <p className="mt-2 text-sm text-slate-300">
-                Export session CSVs from RaceChrono, TrackAddict, AiM, SoloStorm (or any timing system).
+                Export session CSVs from RaceChrono, TrackAddict, AiM, SoloStorm, or any timing system.
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
-              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 2</p>
-              <h3 className="mt-2 text-base font-semibold text-slate-50">Upload &amp; Validate</h3>
+              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
+                STEP 2
+              </p>
+              <h3 className="mt-2 text-base font-semibold text-slate-50">
+                Upload &amp; Validate
+              </h3>
               <p className="mt-2 text-sm text-slate-300">
-                Upload to the coach portal. Track App validates and maps the file so it lands cleanly in the right session view.
+                Upload to the portal. Track App validates and maps data into the right driver and session context.
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-800/60 bg-slate-950/40 p-6">
-              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">STEP 3</p>
-              <h3 className="mt-2 text-base font-semibold text-slate-50">Coach From One Dashboard</h3>
+              <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">
+                STEP 3
+              </p>
+              <h3 className="mt-2 text-base font-semibold text-slate-50">
+                Coach From One View
+              </h3>
               <p className="mt-2 text-sm text-slate-300">
-                Review 10–15 drivers trackside on phone or tablet: pace trends, best laps, consistency, and notes—without spreadsheets.
+                Review the roster, history, and progress quickly, then export clean summary views for debrief and follow-up.
               </p>
             </div>
           </div>
 
-          {/* Contextual CTA: Try CSV Import lives here (not in hero) */}
           <div className="mt-10 flex flex-col items-center justify-center gap-3 text-center">
-            <p className="text-xs text-slate-400">
-              Want to test the workflow end-to-end?
-            </p>
+            <p className="text-xs text-slate-400">Want to test the workflow end-to-end?</p>
             <a
               href={CSV_IMPORT_URL}
               target="_blank"
@@ -440,135 +412,19 @@ export default function TrackAppHeroPage() {
           </div>
         </Section>
 
-        {/* What it does */}
+        {/* PROGRAM VIEW */}
         <Section
-          id="features"
-          eyebrow="NEW in v2.4"
-          title="Production-Ready for Trackside Coaching"
-          kicker="Not just an MVP anymore—this is production-deployed coaching infrastructure. Mobile-first design means coaches review 12 drivers on iPhone in the paddock in under 2 minutes. No laptop required."
+          id="program"
+          eyebrow="PROGRAM VIEW"
+          title="What a Program Gets"
+          kicker="Everything is designed around lead instructor visibility and multi-event continuity, without changing what drivers already use."
         >
-          <div className="grid gap-8 md:grid-cols-3">
-            {featureCards.map((card) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+            {programCards.map((cap) => (
               <div
-                key={card.title}
-                className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-950/80 p-5 shadow-lg shadow-slate-950/60"
+                key={cap.title}
+                className="flex flex-col gap-3 rounded-2xl border border-slate-800 bg-slate-950/80 p-5"
               >
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-50">{card.title}</h3>
-                  <p className="mt-1 text-xs text-slate-400">{card.body}</p>
-                </div>
-                <div className="relative mt-1 aspect-video overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
-                  <Image
-                    src={card.image}
-                    alt={`${card.title} UI mock`}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Optional / Beta callout (not a main CTA) */}
-          <div className="mt-10 rounded-2xl border border-slate-800 bg-slate-950/60 p-6">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-                  Optional • Beta
-                </p>
-                <p className="mt-2 text-sm font-semibold text-slate-50">
-                  Session-view sandbox (single-screen demo)
-                </p>
-                <p className="mt-1 text-xs text-slate-400">
-                  This is a standalone “session view” demo—helpful for visuals, but the real product story is the coach dashboard.
-                </p>
-              </div>
-              <a
-                href={BETA_SESSION_URL}
-                className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-4 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
-              >
-                Open Beta Session Demo ↗
-              </a>
-            </div>
-          </div>
-        </Section>
-
-        {/* Tech stack */}
-        <Section
-          id="stack"
-          eyebrow="Production-Grade Engineering"
-          title="Built Mobile-First, Optimized for Performance"
-          kicker="Complete mobile responsive design across all pages. Card layouts on phone, table layouts on desktop. 50x query optimization eliminates N+1 problem. Sub-100ms page loads on production."
-        >
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-            <div className="space-y-4 text-sm text-slate-300">
-              <p>
-                Track App v2.4 represents a major production milestone: mobile-first responsive design, 50x performance optimization, and advanced filtering with CSV export. This isn't a prototype—it's production-deployed coaching infrastructure.
-              </p>
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  Mobile-First Architecture
-                </h3>
-                <ul className="mt-2 grid gap-2 text-xs text-slate-300 sm:grid-cols-2">
-                  <li>• Responsive breakpoints: mobile/tablet/desktop</li>
-                  <li>• Card layouts on phone (&lt;768px)</li>
-                  <li>• Table layouts on desktop (≥1024px)</li>
-                  <li>• Touch-optimized interactions (48px targets)</li>
-                  <li>• Professional loading skeleton states</li>
-                  <li>• Collapsible sections for mobile efficiency</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  Performance Optimization (50x Improvement)
-                </h3>
-                <ul className="mt-2 space-y-2 text-xs text-slate-300">
-                  <li>• Problem: 50+ database queries per page (N+1 issue, 3-5s loads)</li>
-                  <li>• Solution: Single optimized query with Supabase aggregations</li>
-                  <li>• Result: Sub-100ms page loads, scalable to 1,000+ sessions</li>
-                  <li>• Same pattern across Home, Sessions, and Coach Dashboard pages</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Tech Stack</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {techStack.map((item) => (
-                    <span
-                      key={item}
-                      className="inline-flex items-center rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-[11px] text-slate-200"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="relative aspect-video overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
-                <Image
-                  src={mobileDashboard}
-                  alt="Mobile-first responsive dashboard mock"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 420px, (min-width: 640px) 60vw, 100vw"
-                />
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        {/* Core capabilities */}
-        <Section
-          id="capabilities"
-          eyebrow="CORE CAPABILITIES"
-          title="Everything Coaches Need, Trackside"
-          kicker="Mobile-optimized workflows for coaches reviewing 12–15 drivers between 20-minute sessions. Card-based layouts on phone, table layouts on desktop."
-        >
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {coreCapabilities.map((cap) => (
-              <div key={cap.title} className="flex flex-col gap-3 rounded-2xl border border-slate-800 bg-slate-950/80 p-5">
                 <h3 className="text-sm font-semibold text-slate-50">{cap.title}</h3>
                 <p className="text-xs text-slate-400">{cap.description}</p>
                 <div className="relative mt-1 aspect-video overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
@@ -577,109 +433,115 @@ export default function TrackAppHeroPage() {
                     alt={`${cap.title} screenshot mock`}
                     fill
                     className="object-cover"
-                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 520px, (min-width: 640px) 50vw, 100vw"
                   />
                 </div>
               </div>
             ))}
           </div>
-        </Section>
 
-        {/* Numbers */}
-        <Section id="numbers" eyebrow="Execution Metrics" title="Production-Deployed & Performance-Optimized">
-          <div className="grid gap-6 md:grid-cols-3">
-            {metrics.map((block) => (
-              <div key={block.title} className="rounded-2xl border border-slate-800 bg-slate-950/80 p-5">
-                <h3 className="text-sm font-semibold text-slate-50">{block.title}</h3>
-                <ul className="mt-3 space-y-1.5 text-xs text-slate-300">
-                  {block.items.map((item) => (
-                    <li key={item}>• {item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-blue-600/10 p-6">
-            <div className="flex items-start gap-4">
-              <span className="text-3xl">⚡</span>
+          {/* Optional visual demo link (kept small, not competing with the main story) */}
+          <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-slate-800 bg-slate-950/60 p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-orange-400">Performance Optimization Deep-Dive</h3>
-                <p className="mt-2 text-xs text-slate-300">
-                  <strong className="text-slate-100">The Problem:</strong> 50+ database queries per page load caused 3-5 second loads.
+                <p className="text-sm font-semibold text-slate-100">
+                  Optional visual demo
                 </p>
-                <p className="mt-2 text-xs text-slate-300">
-                  <strong className="text-slate-100">The Solution:</strong> Server-side Supabase aggregation (COUNT/MAX/JOIN) instead of client-side loops.
+                <p className="mt-1 text-xs text-slate-400">
+                  Video plus coaching notes in a single session view. Useful for visuals, not required for the pilot.
                 </p>
-                <p className="mt-2 text-xs text-slate-300">
-                  <strong className="text-slate-100">The Result:</strong> 50x improvement. Sub-100ms page loads. Scales to 1,000+ sessions.
-                </p>
+              </div>
+              <a
+                href={BETA_SESSION_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950/40 px-5 py-2 text-xs font-semibold text-slate-50 hover:border-slate-500 hover:text-white"
+              >
+                Open Beta Session Demo ↗
+              </a>
+            </div>
+          </div>
+        </Section>
+
+        {/* CREDIBILITY */}
+        <Section
+          id="credibility"
+          eyebrow="CREDIBILITY"
+          title="Production-deployed. Trackside-fast."
+          kicker='The only thing worse than “no tool” is a tool that breaks at the track. Track App is built to be stable, fast, and usable on mobile where coaches actually work.'
+        >
+          <div className="mx-auto max-w-5xl">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] sm:p-8">
+              <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
+                <div className="text-left">
+                  <h3 className="text-sm font-semibold text-slate-100">
+                    Built for real weekend execution
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-300">
+                    Track App is production-deployed and mobile-first. It stays responsive in the paddock,
+                    supports real weekend workflows, and keeps rosters, notes, and session history organized
+                    without spreadsheets.
+                  </p>
+                  <p className="mt-4 text-xs leading-relaxed text-slate-400">
+                    It is intentionally simple. Fast roster scanning and continuity come first, then features expand based on real pilot feedback.
+                  </p>
+                </div>
+
+                <div className="text-left">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                    What you can expect
+                  </h3>
+                  <ul className="mt-4 grid gap-3 text-sm text-slate-300">
+                    <li className="flex gap-3">
+                      <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400/80" />
+                      Mobile-first layouts that work on phones between sessions
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400/80" />
+                      Fast search and filtering across drivers, tracks, and dates
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400/80" />
+                      Clean CSV validation and reliable imports
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400/80" />
+                      Designed to scale for large weekend rosters and repeat drivers
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </Section>
 
-        {/* Story */}
-        <Section id="story" eyebrow="Why Mobile-First Matters" title="Built for Real Trackside Coaching Workflows">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-            <div className="space-y-4 text-sm text-slate-300">
-              <p>
-                Coaches don't work at desks with dual monitors. They work in paddocks between sessions, reviewing data on phones or tablets while drivers prep for the next run group.
-              </p>
-              <p>
-                Track App v2.4 is built mobile-first—not a desktop app squeezed onto a phone. Card-based mobile layouts. Touch-optimized interactions. Advanced filtering without clutter.
-              </p>
-              <p>
-                The 50x performance optimization isn’t just a tech flex—it means coaches can review 12 drivers fast enough for it to matter between sessions.
-              </p>
-
-              {/* Small, consistent CTA (text-link) to Live Demo */}
-              <div className="pt-2">
-                <a
-                  href={COACH_DEMO_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-xs font-semibold text-orange-300/90 hover:text-orange-200"
-                >
-                  Open the Live Demo ↗
-                </a>
-              </div>
-            </div>
-
-            <div className="relative aspect-video overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
-              <Image
-                src={heroCoachCu}
-                alt="Coach using Track App on a tablet in the paddock"
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 420px, (min-width: 640px) 60vw, 100vw"
-              />
-            </div>
-          </div>
-        </Section>
-
-        {/* Pilot section (was #faq before) */}
-        <Section id="pilot" eyebrow="Ready for Pilot Testing" title="Pilot Programs (Q1 2026)">
+        {/* PILOT */}
+        <Section
+          id="pilot"
+          eyebrow="PILOT"
+          title="Pilot Programs, Small Scope"
+          kicker="The goal is simple: validate whether this reduces admin and improves continuity for a real HPDE weekend."
+        >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <div className="space-y-4 text-sm text-slate-300">
-              <p>
-                Track App v2.4 is production-deployed and stable. The goal now is validating real weekend workflows with 2–3 pilot programs, then refining based on coach feedback.
+              <p className="text-sm font-semibold text-slate-100">
+                Pilot scope (kept intentionally small):
               </p>
-              <p className="text-sm font-semibold text-slate-100">Ideal for:</p>
               <ul className="space-y-1.5 text-xs text-slate-300">
-                <li>• HPDE coaches managing 12-20 drivers per event</li>
-                <li>• Driving schools that want consistent notes + progress tracking</li>
-                <li>• Programs that want to scale coaching quality without spreadsheets</li>
+                <li>• One event</li>
+                <li>• 10 to 20 drivers (start with drivers who already export data)</li>
+                <li>• Use roster view and driver history during and after sessions</li>
+                <li>• Export summary views for debrief and follow-up</li>
               </ul>
               <p className="text-xs text-slate-400">
-                If you want to explore a pilot, reach out. I’ll tailor the workflow to your weekend reality.
+                If it does not create obvious value in a weekend, it is not worth anyone’s time. That is the test.
               </p>
             </div>
 
             <div className="space-y-3 rounded-2xl border border-slate-800 bg-slate-950/80 p-5 text-xs text-slate-200">
               <p className="font-semibold text-slate-50">Pilot access</p>
               <p className="text-xs text-slate-400">
-                Keep it simple: one coach dashboard, CSV-first workflow, and feedback-driven iteration.
+                CSV-first, program dashboard, feedback-driven iteration.
               </p>
               <div className="mt-3 flex flex-col gap-2">
                 <a
@@ -705,12 +567,17 @@ export default function TrackAppHeroPage() {
         <FAQ />
       </main>
 
-      {/* Footer */}
+      {/* FOOTER */}
       <footer className="border-t border-slate-900/80 bg-slate-950 px-4 py-6 text-[11px] text-slate-500 sm:px-6 md:px-8 lg:px-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 sm:flex-row">
-          <p>Production-Ready, Mobile-First Coach OS • Track App v2.4</p>
+          <p>Track App • Program-level coaching workflow (HPDE)</p>
           <div className="flex flex-wrap items-center gap-3">
-            <a href={COACH_DEMO_URL} target="_blank" rel="noreferrer" className="hover:text-slate-300">
+            <a
+              href={COACH_DEMO_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-slate-300"
+            >
               Live Demo
             </a>
             <span className="h-1 w-1 rounded-full bg-slate-700" />
