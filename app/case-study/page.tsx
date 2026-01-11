@@ -345,34 +345,7 @@ export default function TrackAppHeroPage() {
               <li className="inline-flex items-center gap-2"><span className="text-amber-400">✓</span> Upload + validate in ~15 seconds</li>
             </ul>
 
-            {/* HERO IMAGE: no longer a clickable Session Demo CTA */}
-            <div className="mx-auto mt-10 w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-950/70 shadow-[0_24px_80px_rgba(15,23,42,0.9)] backdrop-blur">
-
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              <div>
-                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">WEEKEND IMPACT</p>
-                <p className="mt-2 text-sm font-semibold text-slate-50">Less admin, more coaching</p>
-                <p className="mt-1 text-sm text-slate-400">
-                  Review 10–15 drivers between sessions without juggling apps or spreadsheets. One place for pace trends, best laps, and coaching notes.
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">BUILT FOR</p>
-                <p className="mt-2 text-sm font-semibold text-slate-50">HPDE &amp; track-day programs</p>
-                <p className="mt-1 text-sm text-slate-400">
-                  Designed around HPDE weekends, private coaching days, and multi-driver programs—not pie-in-the-sky telemetry or teams with data engineers.
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">PLAYS NICE WITH</p>
-                <p className="mt-2 text-sm font-semibold text-slate-50">Your existing timing apps</p>
-                <p className="mt-1 text-sm text-slate-400">
-                  Works alongside tools like RaceChrono, RaceBox, and AiM. No iOS app required—export CSV, upload, and start coaching from one dashboard.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+           
 
         {/* DATA IN */}
         <Section
