@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SiteHeader from "@/components/SiteHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,12 +13,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Track App – AI Racing Coach",
+export const metadata: Metadata = {
+  title: "Track App – Coaching Workflow for HPDE",
   description:
-    "Turn your track day data into actionable coaching insights. Built with Next.js, Supabase, and Claude AI.",
+    "Turn lap-timer exports into a fast, mobile-first multi-driver coaching workflow for HPDE programs. CSV-first, pilot-ready.",
 };
-
 
 export default function RootLayout({
   children,
@@ -26,9 +26,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <SiteHeader />
         {children}
       </body>
     </html>
