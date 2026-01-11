@@ -345,7 +345,51 @@ export default function TrackAppHeroPage() {
               <li className="inline-flex items-center gap-2"><span className="text-amber-400">✓</span> Upload + validate in ~15 seconds</li>
             </ul>
 
-           
+            {/* HERO IMAGE: no longer a clickable Session Demo CTA */}
+            <div className="mx-auto mt-10 w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-950/70 shadow-[0_24px_80px_rgba(15,23,42,0.9)] backdrop-blur">
+              <div className="relative aspect-[16/9] w-full">
+                <Image
+                  src={heroCoach}
+                  alt="Track App coaching screens preview"
+                  fill
+                  priority
+                  className="object-cover"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/0 to-slate-950/0" />
+                <div className="absolute inset-x-0 top-0 flex items-center justify-between px-6 pt-4 text-xs font-medium text-slate-200 md:px-8">
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[0.65rem] uppercase tracking-[0.16em] text-slate-400">Coach dashboard preview</span>
+                    <span className="text-[0.7rem] text-slate-200">Multi-driver view • coaching notes • progress</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              <div>
+                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">WEEKEND IMPACT</p>
+                <p className="mt-2 text-sm font-semibold text-slate-50">Less admin, more coaching</p>
+                <p className="mt-1 text-sm text-slate-400">
+                  Review 10–15 drivers between sessions without juggling apps or spreadsheets. One place for pace trends, best laps, and coaching notes.
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">BUILT FOR</p>
+                <p className="mt-2 text-sm font-semibold text-slate-50">HPDE &amp; track-day programs</p>
+                <p className="mt-1 text-sm text-slate-400">
+                  Designed around HPDE weekends, private coaching days, and multi-driver programs—not pie-in-the-sky telemetry or teams with data engineers.
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold tracking-[0.18em] text-amber-400">PLAYS NICE WITH</p>
+                <p className="mt-2 text-sm font-semibold text-slate-50">Your existing timing apps</p>
+                <p className="mt-1 text-sm text-slate-400">
+                  Works alongside tools like RaceChrono, RaceBox, and AiM. No iOS app required—export CSV, upload, and start coaching from one dashboard.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* DATA IN */}
         <Section
