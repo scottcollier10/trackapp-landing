@@ -12,6 +12,8 @@ import coreProgress from "@/public/images/core-longitudinal-progress.webp";
 import coreSession from "@/public/images/core-session-analysis.webp";
 import coreCsv from "@/public/images/core-csv-export.webp";
 
+import SiteHeader from "@/components/SiteHeader";
+
 // ============================================================================
 // CTA CONSTANTS (single source of truth)
 // ============================================================================
