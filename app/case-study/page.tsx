@@ -347,23 +347,6 @@ export default function TrackAppHeroPage() {
 
             {/* HERO IMAGE: no longer a clickable Session Demo CTA */}
             <div className="mx-auto mt-10 w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-950/70 shadow-[0_24px_80px_rgba(15,23,42,0.9)] backdrop-blur">
-              <div className="relative aspect-[16/9] w-full">
-                <Image
-                  src={heroCoach}
-                  alt="Track App coaching screens preview"
-                  fill
-                  priority
-                  className="object-cover"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/0 to-slate-950/0" />
-                <div className="absolute inset-x-0 top-0 flex items-center justify-between px-6 pt-4 text-xs font-medium text-slate-200 md:px-8">
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-[0.65rem] uppercase tracking-[0.16em] text-slate-400">Coach dashboard preview</span>
-                    <span className="text-[0.7rem] text-slate-200">Multi-driver view • coaching notes • progress</span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               <div>
